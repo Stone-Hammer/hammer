@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="google-site-verification" content="JrywzhHu_lykmprlOZGqoqoEaFHsI_FgCiRmfJW7_LA"/>
+  <meta property="og:site_name" content="石锤 App - 新闻持续跟踪">
+  <link rel="icon" th:href="@{/img/timg.jpg}">
+  <link rel="apple-touch-icon" th:href="@{/img/timg.jpg}"/>
+  <link rel="stylesheet" th:href="@{/css/normalize.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <script th:src="@{/js/feather.min.js}" ></script>
+
+  <title>石锤~您的资讯专家 </title>
+  <meta name="description" content="持续追踪热点新闻事件"/>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  </head>
+  <body class=" route-home ">
+    <nav id="app-nav">
+    <div class="container d-flex align-items-center">
+      <a href="/" class="branding">
+        石锤
+        <small class="hidden-xs">beta</small>
+      </a>
+      <ul>
+      <li class="active">
+        <a href="/">
+          <i data-feather="home"></i>
+          <span> 首页 </span>
+        </a>
+      </li>
+
+      <li >
+        <a href="/lives">
+          <i data-feather="hash"></i>
+          <span class="hidden-xs"> Live </span>
+        </a>
+      </li>
+
+      <li >
+        <a href="/events">
+          <i data-feather="file-text"></i>
+          <span class="hidden-xs"> 专栏 </span>
+        </a>
+      </li>
+
+      <li >
+        <a href="/search">
+          <i data-feather="search"></i>
+          <span class="hidden-xs"> 搜索 </span>
+        </a>
+      </li>
+    </ul>
+
+    </div>
+    </nav>
+
+    <div class="container">
+      <section class="list-container new-lives">
+        <h2> 最近关注
+          <a href="/lives/new" class="more">
+            <i data-feather="arrow-right-circle"></i>
+          </a>
+        </h2>
+
+        <div class="list">
+          <div class="list-item live-item">
+            <h3>
+              <a href="/lives/10301">新闻一标题</a>
+            </h3>
+            <blockquote>
+              <img src="来源网址图片" alt="" width="40" height="40">
+              <p>
+                <a href="/lives/10301">
+                <time>？？分钟前</time>
+                  新闻一内容摘要
+                <cite>
+                  新闻来源
+                </cite>
+                </a>
+              </p>
+            </blockquote>
+
+            <footer>
+              <div class="badge">
+                <i data-feather="activity"></i>
+                ？
+              </div>
+            </footer>
+          </div>
+        </div>
+      </section>
+
+      <section class="list-container realtime-lives">
+        <h2> 往事进展
+          <a href="/lives/realtime" class="more">
+            <i data-feather="arrow-right-circle"></i>
+          </a>
+        </h2>
+
+        <div class="list">
+          <div class="list-item live-item">
+            <h3>
+              <a href="/lives/10073">新闻一标题</a>
+            </h3>
+            <blockquote>
+              <img src="新闻来源网址" alt="" width="40" height="40">
+              <p>
+                <a href="/lives/10073">
+                <time>？？分钟前</time>
+                  新闻一内容摘要
+                <cite>
+                  来源网站
+                </cite>
+                </a>
+              </p>
+            </blockquote>
+
+            <footer>
+              <div class="badge">
+                <i data-feather="activity"></i>
+                ？？
+              </div>
+            </footer>
+          </div>
+        </div>
+      </section>
+
+      <section class="list-container new-events">
+
+        <h2>故事化专栏
+          <a href="/events" class="more">
+            <i data-feather="arrow-right-circle"></i>
+          </a>
+        </h2>
+        <div class="list">
+          <div class="list-item event-item">
+            <h3>
+              <a href="/events/10017">故事化新闻一</a>
+            </h3>
+            <p class="summary">
+              故事化新闻一内容。。。。。。。。。。。
+            </p>
+
+            <footer>
+              <div class="badge">
+                <i data-feather="activity"></i>
+                ？？
+              </div>
+              <div class="badge">
+                <i data-feather="user"></i>
+                ？？
+              </div>
+              <div class="badge">
+                <i data-feather="message-square"></i>
+                ？？
+              </div>
+            </footer>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
