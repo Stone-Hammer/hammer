@@ -67,17 +67,18 @@
         </h2>
 
         <div class="list">
-          <div class="list-item live-item">
+          <div class="list-item live-item" th:each="lives:${liveslist}">
             <h3>
-              <a href="/lives/10301">新闻一标题</a>
+              <a href="/lives/10301" th:text="${lives.getLives_title()}">
+                新闻标题</a>
             </h3>
             <blockquote>
               <img src="来源网址图片" alt="" width="40" height="40">
               <p>
                 <a href="/lives/10301">
-                <time>？？分钟前</time>
-                  新闻一内容摘要
-                <cite>
+                  <time th:text="${lives.getLives_time()}"></time>
+                  <span th:text="${lives.getDetails().get(0).getTitle()}"></span>
+                <cite th:text="${lives.getDetails().get(0).getName()}">
                   新闻来源
                 </cite>
                 </a>
@@ -87,7 +88,7 @@
             <footer>
               <div class="badge">
                 <i data-feather="activity"></i>
-                ？
+                <span th:text="${lives.getLives_count()}"></span>
               </div>
             </footer>
           </div>

@@ -1,11 +1,11 @@
 package com.stonehammer.hammer.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Table(name="lives_news", schema = "hammer")
 public class Lives_news {
 
     @Id
@@ -16,6 +16,18 @@ public class Lives_news {
     private Integer manager_id;
     private Integer lives_count;
     private Date lives_time;
+
+    @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name = "lives_id")
+    private List<Lives_detail> details;
+
+    public List<Lives_detail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<Lives_detail> details) {
+        this.details = details;
+    }
 
     public Integer getLives_id() {
         return lives_id;
