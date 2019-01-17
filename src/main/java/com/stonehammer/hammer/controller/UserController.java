@@ -28,6 +28,9 @@ public class UserController {
     @PostMapping("/getUserByPhoneAndPwd")
     private User getUserByPhoneAndPwd(String phone,String password){ return userService.getUserByPhoneAndPwd(phone, password);}
 
+    @PostMapping("/getUserByIdAndPwd")
+    private User getUserByIdAndPwd(Integer user_id,String password){ return userService.getUserByIdAndPwd(user_id, password);}
+
     @PutMapping("/updateUser")
     private User updateUser(User user){ return userService.updateUser(user);}
 

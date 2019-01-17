@@ -16,6 +16,7 @@ public class User {
     private String email;
     private String phone;
     private String icon;
+//    private List<Interest> list
 
     public Integer getUser_id() {
         return user_id;

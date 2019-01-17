@@ -26,5 +26,8 @@ public interface UserService {
 
     //根据手机号和密码查询用户信息
     User getUserByPhoneAndPwd(String phone,String password);
+
+    //根据用户ID和密码查询用户信息
+    User getUserByIdAndPwd(Integer user_id,String password);
 }
 

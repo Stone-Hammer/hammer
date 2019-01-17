@@ -34,4 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByPhoneAndPwd(String phone,String password){ return userRepository.findByPhoneAndPassword(phone, password);}
+
+    @Override
+    public User getUserByIdAndPwd(Integer manager_id,String password){ return userRepository.findByIdAndPassword(manager_id, password);}
 }
