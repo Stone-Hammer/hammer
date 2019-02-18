@@ -20,11 +20,11 @@ public class Story_news {
     private Integer interest_count;
     private Date story_time;
 
-    @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
+    @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
     @JoinColumn(name = "story_id")
     private List<Story_paragraph> paragraphs;
 
-    @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
+    @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
     @JoinColumn(name = "story_id")
     private List<Story_figure> figures;
 
