@@ -4,9 +4,11 @@ import com.stonehammer.hammer.entity.Story_figure;
 import com.stonehammer.hammer.repository.Story_figureRepository;
 import com.stonehammer.hammer.service.Story_figureService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class Story_figureServiceImpl implements Story_figureService {
 
     @Autowired

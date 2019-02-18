@@ -34,7 +34,7 @@ public class Lives_newsPageController {
     public String add_lives_submit(Model model, @ModelAttribute Lives_news live){
         Lives_news newLive=new Lives_news();
         newLive.setLives_id(live.getLives_id());
-        newLive.setManager_id(live.getManager_id());
+        newLive.setManager(live.getManager());
         newLive.setLives_title(live.getLives_title());
         newLive.setIntroduction(live.getIntroduction());
         newLive.setLives_count(live.getLives_count());
