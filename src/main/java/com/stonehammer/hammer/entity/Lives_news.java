@@ -13,7 +13,9 @@ public class Lives_news {
     private Integer lives_id;
     private String lives_title;
     private String introduction;
-    private Integer manager_id;
+    @ManyToOne(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name = "manager_id")
+    private Manager manager;
     private Integer lives_count;
     private Date lives_time;
 
@@ -53,12 +55,12 @@ public class Lives_news {
         this.introduction = introduction;
     }
 
-    public Integer getManager_id() {
-        return manager_id;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setManager_id(Integer manager_id) {
-        this.manager_id = manager_id;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public Integer getLives_count() {
