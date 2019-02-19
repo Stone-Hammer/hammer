@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("detail")
+@RequestMapping("details")
 public class Lives_detailPageController {
 
     @Autowired

@@ -1,9 +1,11 @@
 package com.stonehammer.hammer.service;
 
 import com.stonehammer.hammer.entity.Story_news;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface Story_newsService {
 
     //添加故事化新闻

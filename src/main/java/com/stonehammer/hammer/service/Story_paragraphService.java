@@ -2,9 +2,11 @@ package com.stonehammer.hammer.service;
 
 import com.stonehammer.hammer.entity.Lives_detail;
 import com.stonehammer.hammer.entity.Story_paragraph;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface Story_paragraphService {
 
     //添加故事化段落
