@@ -35,7 +35,9 @@ public class UserPageController {
         model.addAttribute("liveslist", list);
         List<Lives_news> indexlives = new ArrayList<Lives_news>();
         for(int i=0;i<INDEX_LIVES_NUM;i++){
-            indexlives.add(list.get(i));
+            if(!list.isEmpty() && list.size()>=INDEX_LIVES_NUM){
+                indexlives.add(list.get(i));
+            }
         }
         model.addAttribute("indexlives", indexlives);
 
@@ -43,7 +45,10 @@ public class UserPageController {
         model.addAttribute("storylist", list1);
         List<Story_news> indexstory = new ArrayList<Story_news>();
         for(int i=0;i<INDEX_STORY_NUM;i++){
-            indexstory.add(list1.get(i));
+            if(!list1.isEmpty() && list1.size()>=INDEX_STORY_NUM){
+                indexstory.add(list1.get(i));
+            }
+
         }
         return "index";
     }
