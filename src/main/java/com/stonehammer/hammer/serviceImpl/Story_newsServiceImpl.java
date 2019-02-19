@@ -4,9 +4,10 @@ import com.stonehammer.hammer.entity.Story_news;
 import com.stonehammer.hammer.repository.Story_newsRepository;
 import com.stonehammer.hammer.service.Story_newsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class Story_newsServiceImpl implements Story_newsService {
 
     @Autowired
@@ -19,7 +20,8 @@ public class Story_newsServiceImpl implements Story_newsService {
 
     @Override
     public List<Story_news> getAllStory() {
-        return story_newsRepository.findAll();
+//        return story_newsRepository.findAll();
+        return story_newsRepository.findAllOrderByTimeDesc();
     }
 
     @Override

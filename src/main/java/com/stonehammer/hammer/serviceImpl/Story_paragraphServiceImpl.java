@@ -4,9 +4,10 @@ import com.stonehammer.hammer.entity.Story_paragraph;
 import com.stonehammer.hammer.repository.Story_paragraphRepository;
 import com.stonehammer.hammer.service.Story_paragraphService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class Story_paragraphServiceImpl implements Story_paragraphService {
 
     @Autowired

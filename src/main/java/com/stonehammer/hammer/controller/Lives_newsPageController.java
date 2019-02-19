@@ -16,6 +16,13 @@ public class Lives_newsPageController {
     @Autowired
     private Lives_newsService lives_newsService;
 
+    @GetMapping("/info/{id}")
+    public String show_lives_info(Model model,@PathVariable("id") Integer lives_id){
+        Lives_news lives_news=lives_newsService.getLivesById(lives_id);
+        model.addAttribute("lives_news",lives_news);
+        return "lives_news";
+    }
+
     @GetMapping("/all")
     public String getAllLives(Model model){
         List<Lives_news> lists=lives_newsService.getAllLives();

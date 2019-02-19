@@ -21,34 +21,34 @@
   <body class=" route-home ">
     <nav id="app-nav">
     <div class="container d-flex align-items-center">
-      <a href="/" class="branding">
+      <a th:href="@{/hammer}" class="branding">
         石锤
         <small class="hidden-xs">beta</small>
       </a>
       <ul>
       <li class="active">
-        <a href="/">
+        <a th:href="@{/hammer}">
           <i data-feather="home"></i>
           <span> 首页 </span>
         </a>
       </li>
 
       <li >
-        <a href="/lives">
+        <a th:href="@{/lives}">
           <i data-feather="hash"></i>
           <span class="hidden-xs"> Live </span>
         </a>
       </li>
 
       <li >
-        <a href="/events">
+        <a th:href="@{/story}">
           <i data-feather="file-text"></i>
           <span class="hidden-xs"> 专栏 </span>
         </a>
       </li>
 
       <li >
-        <a href="/search">
+        <a th:href="@{/search}">
           <i data-feather="search"></i>
           <span class="hidden-xs"> 搜索 </span>
         </a>
@@ -60,23 +60,24 @@
 
     <div class="container">
       <section class="list-container new-lives">
-        <h2> 最近关注
-          <a href="/lives/new" class="more">
+        <h2> 时事新闻
+          <a th:href="@{/lives}" class="more">
             <i data-feather="arrow-right-circle"></i>
           </a>
         </h2>
 
         <div class="list">
-          <div class="list-item live-item" th:each="lives:${liveslist}">
+          <div class="list-item live-item" th:each="lives:${indexlives}">
             <h3>
-              <a href="/lives/10301" th:text="${lives.getLives_title()}">
+              <a th:href="@{'/lives/info/'+${lives.getLives_id()}}"
+                 th:text="${lives.getLives_title()}">
                 新闻标题</a>
             </h3>
             <blockquote>
-              <img src="来源网址图片" alt="" width="40" height="40">
+              <img th:src="@{/img/澎湃新闻.jpg}"  alt="" width="40" height="40">
               <p>
-                <a href="/lives/10301">
-                  <time th:text="${lives.getLives_time()}"></time>
+                <a th:href="@{'/lives/info/'+${lives.getLives_id()}}">
+                  <time th:text="${lives.getFormatTime()}">新闻日期</time>
                   <span th:text="${lives.getDetails().get(0).getTitle()}"></span>
                 <cite th:text="${lives.getDetails().get(0).getName()}">
                   新闻来源
@@ -88,42 +89,7 @@
             <footer>
               <div class="badge">
                 <i data-feather="activity"></i>
-                <span th:text="${lives.getLives_count()}"></span>
-              </div>
-            </footer>
-          </div>
-        </div>
-      </section>
-
-      <section class="list-container realtime-lives">
-        <h2> 往事进展
-          <a href="/lives/realtime" class="more">
-            <i data-feather="arrow-right-circle"></i>
-          </a>
-        </h2>
-
-        <div class="list">
-          <div class="list-item live-item">
-            <h3>
-              <a href="/lives/10073">新闻一标题</a>
-            </h3>
-            <blockquote>
-              <img src="新闻来源网址" alt="" width="40" height="40">
-              <p>
-                <a href="/lives/10073">
-                <time>？？分钟前</time>
-                  新闻一内容摘要
-                <cite>
-                  来源网站
-                </cite>
-                </a>
-              </p>
-            </blockquote>
-
-            <footer>
-              <div class="badge">
-                <i data-feather="activity"></i>
-                ？？
+                <span th:text="${'新闻数量:'+lives.getLives_count()}"></span>
               </div>
             </footer>
           </div>
@@ -133,32 +99,35 @@
       <section class="list-container new-events">
 
         <h2>故事化专栏
-          <a href="/events" class="more">
+          <a th:href="@{/story}" class="more">
             <i data-feather="arrow-right-circle"></i>
           </a>
         </h2>
         <div class="list">
-          <div class="list-item event-item">
+          <div class="list-item event-item" th:each="story:${storylist}">
             <h3>
-              <a href="/events/10017">故事化新闻一</a>
+              <a th:href="@{'/story/info/'+${story.getStory_id()}}"
+                 th:text="${story.getStory_title()}">
+                故事化新闻一
+              </a>
             </h3>
-            <p class="summary">
-              故事化新闻一内容。。。。。。。。。。。
+            <p class="summary" th:text="${story.getIntroduction()}">
+              故事化新闻一内容
             </p>
 
             <footer>
               <div class="badge">
-                <i data-feather="activity"></i>
-                ？？
+                <i data-feather="activity" ></i>
+                <span th:text="${story.getTags()}">新闻标签</span>
               </div>
               <div class="badge">
                 <i data-feather="user"></i>
-                ？？
+                <span th:text="${'关注人数:'+story.getInterest_count()}"></span>
               </div>
-              <div class="badge">
-                <i data-feather="message-square"></i>
-                ？？
-              </div>
+              <!--<div class="badge">-->
+                <!--<i data-feather="message-square"></i>-->
+                <!--？？-->
+              <!--</div>-->
             </footer>
           </div>
         </div>

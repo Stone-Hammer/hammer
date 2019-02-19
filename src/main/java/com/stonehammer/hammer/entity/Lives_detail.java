@@ -1,6 +1,7 @@
 package com.stonehammer.hammer.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -20,6 +21,11 @@ public class Lives_detail {
     private String detail_text;
     private Integer words_count;
     private Date time;
+
+    public String getFormatTime() {
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(time);
+    }
 
     public Integer getDetail_id() {
         return detail_id;

@@ -18,7 +18,10 @@ public class Lives_newsServiceImpl implements Lives_newsService {
     public Lives_news addLives(Lives_news lives){ return lives_newsRepository.save(lives); }
 
     @Override
-    public List<Lives_news> getAllLives(){ return lives_newsRepository.findAll(); }
+    public List<Lives_news> getAllLives(){
+//        return lives_newsRepository.findAll();
+        return lives_newsRepository.findAllOrderByTimeDesc();
+    }
 
     @Override
     public Lives_news updateLives(Lives_news lives){ return lives_newsRepository.save(lives); }

@@ -1,6 +1,7 @@
 package com.stonehammer.hammer.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,13 @@ public class Lives_news {
 
     @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinColumn(name = "lives_id")
+    @OrderBy("time desc")
     private List<Lives_detail> details;
+
+    public String getFormatTime() {
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(lives_time);
+    }
 
     public List<Lives_detail> getDetails() {
         return details;
