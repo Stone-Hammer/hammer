@@ -8,7 +8,6 @@ import javax.persistence.Id;
 public class User {
 
     @Id
-    @GeneratedValue
     private Integer user_id;
     private String name;
     private String password;

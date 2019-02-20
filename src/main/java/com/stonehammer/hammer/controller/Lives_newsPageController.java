@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -16,18 +17,21 @@ public class Lives_newsPageController {
     @Autowired
     private Lives_newsService lives_newsService;
 
+    @GetMapping("")
+    public String show_lives_list(Model model, HttpSession httpSession){
+        model.addAttribute("user",httpSession.getAttribute("user"));
+        List<Lives_news> liveslist = lives_newsService.getAllLives();
+        model.addAttribute("liveslist",liveslist);
+        return "lives";
+    }
+
     @GetMapping("/info/{id}")
-    public String show_lives_info(Model model,@PathVariable("id") Integer lives_id){
+    public String show_lives_info(Model model, HttpSession httpSession
+            ,@PathVariable("id") Integer lives_id){
+        model.addAttribute("user",httpSession.getAttribute("user"));
         Lives_news lives_news=lives_newsService.getLivesById(lives_id);
         model.addAttribute("lives_news",lives_news);
         return "lives_news";
-    }
-
-    @GetMapping("/all")
-    public String getAllLives(Model model){
-        List<Lives_news> lists=lives_newsService.getAllLives();
-        model.addAttribute("lives",lists);
-        return "index";
     }
 
     @GetMapping("/add")

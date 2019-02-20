@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="google-site-verification" content="JrywzhHu_lykmprlOZGqoqoEaFHsI_FgCiRmfJW7_LA"/>
+  <meta property="og:site_name" content="石锤 App - 新闻持续跟踪">
+  <link rel="icon" th:href="@{/img/timg.jpg}">
+  <link rel="apple-touch-icon" th:href="@{/img/timg.jpg}"/>
+  <link rel="stylesheet" th:href="@{/css/normalize.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/animate.css}">
+  <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+
+  <!--<script th:src="@{/js/modernizr-2.6.2.min.js}"></script>-->
+  <script th:src="@{/js/feather.min.js}" ></script>
+      <!--登录弹框-->
+      <link rel="stylesheet" th:href="@{/css/login.css}">
+      <script th:src="@{/js/jquery-1.12.3.min.js}" ></script>
+      <script>
+          window.onload = function(){
+            var message = "[[${message}]]"
+            if (message!=null &&message!=""){
+              alert(message)
+            }
+          }
+      </script>
+
+
+  <title>用户注册 - 石锤~您的资讯专家 </title>
+  <meta name="description" content="持续追踪热点新闻事件"/>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  </head>
+  <body class=" route-home ">
+    <nav id="app-nav">
+    <div class="container d-flex align-items-center">
+      <a th:href="@{/hammer}" class="branding">
+        石锤
+        <small class="hidden-xs">beta</small>
+      </a>
+      <ul>
+      <li >
+        <a th:href="@{/hammer}">
+          <i data-feather="home"></i>
+          <span> 首页 </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/lives}">
+          <i data-feather="hash"></i>
+          <span class="hidden-xs"> Live </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/story}">
+          <i data-feather="file-text"></i>
+          <span class="hidden-xs"> 专栏 </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/search}">
+          <i data-feather="search"></i>
+          <span class="hidden-xs"> 搜索 </span>
+        </a>
+      </li>
+      <li class="active">
+        <a class="theme-login" href="">
+          <span>登录/注册</span>
+        </a>
+      </li>
+
+      </ul>
+
+    </div>
+    </nav>
+
+
+    </div>
+    <div id="fh5co-contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 col-md-push-1 animate-box">
+
+            <div id="login" class="fh5co-contact-info">
+              <h3>已有账号？</h3>
+              <div class="row form-group">
+                <div class="col-md-8">
+                  <input type="text" name="email" class="form-control" placeholder="你的邮箱地址">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-8">
+                  <input type="password" name="password" class="form-control" placeholder="登录密码">
+                </div>
+              </div>
+
+              <div class="row animate-box">
+                <div class="col-md-7 col-md-offset-7 col-sm-7">
+                  <button onclick="" class="btn btn-primary">邮箱登录</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="register" class="col-md-6 animate-box">
+            <h3>注册账号：</h3>
+            <form name="#">
+              <div class="row form-group">
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="你的昵称*">
+                </div>
+                <div class="col-md-6">
+                  <select name="sex" class="form-control">
+                    <option selected value="">你的性别</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <input type="number" name="user_id" class="form-control" placeholder="你的账号*">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <input type="text" name="email" class="form-control" placeholder="你的邮箱地址*">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <input type="tel" name="phone" class="form-control" placeholder="你的手机号码">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <input type="password" name="password" class="form-control" placeholder="登录密码*">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <input type="password" name="check_password" class="form-control" placeholder="确认密码*">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-20 col-md-offset-20 col-sm-20">
+                  <button onclick="" class="btn btn-primary">确认注册</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </body>
+</html>

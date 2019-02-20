@@ -13,13 +13,60 @@
     <meta property="title" th:content="${lives_news.getLives_title()}">
     <meta property="description" th:content="${lives_news.getIntroduction()}">
     <meta property="url" th:content="@{'lives/info/'+${lives_news.getLives_id()}}">
+    <link rel="icon" th:href="@{/img/timg.jpg}">
+    <link rel="apple-touch-icon" th:href="@{/img/timg.jpg}"/>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}">
 
-  <link rel="icon" th:href="@{/img/timg.jpg}">
-  <link rel="apple-touch-icon" th:href="@{/img/timg.jpg}"/>
-  <link rel="stylesheet" th:href="@{/css/normalize.css}">
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/dropdown.css}">
+
     <script th:src="@{/js/feather.min.js}" ></script>
+    <!--登录弹框-->
+    <link rel="stylesheet" th:href="@{/css/login.css}">
     <script th:src="@{/js/jquery-1.12.3.min.js}" ></script>
+    <script>
+      jQuery(document).ready(function($) {
+        $('.theme-login').click(function(){
+          $('.overlay').fadeIn(100);
+          $('.acover').fadeIn(100);
+          $('.login').slideDown(200);
+        })
+        $('.acover').click(function(){
+          $('.acover').fadeOut(100);
+          $('.overlay').fadeOut(100);
+          $('.login').slideUp(200);
+        })
+      })
+      window.onload = function(){
+        var message = "[[${message}]]"
+        if (message!=null &&message!=""){
+          alert(message)
+        }
+      }
+      function dosubmit() {
+        var th = loginform;
+
+        if (th.user_id.value == "") {
+          alert("用户名不能为空");
+          th.user_id.focus();
+          return false;
+        }
+
+        else if (th.password.value == "") {
+          alert("密码不能为空");
+          th.password.focus();
+          return false;
+        }
+        else{
+          th.action="[[@{/hammer/login}]]";
+          th.submit();
+        }
+      }
+
+    </script>
     <script type="text/javascript">
       function calculate_interval_time(date1){
         console.log(date1);//开始时间
@@ -90,14 +137,14 @@
         <small class="hidden-xs">beta</small>
       </a>
       <ul>
-        <li class="active">
+        <li >
           <a th:href="@{/hammer}">
             <i data-feather="home"></i>
             <span> 首页 </span>
           </a>
         </li>
 
-        <li >
+        <li class="active">
           <a th:href="@{/lives}">
             <i data-feather="hash"></i>
             <span class="hidden-xs"> Live </span>
@@ -117,10 +164,54 @@
             <span class="hidden-xs"> 搜索 </span>
           </a>
         </li>
+        <li class="btn-cta" th:switch="${user}">
+          <a class="theme-login" href="javascript:;" th:case="${null}">
+            <span>登录/注册</span>
+          </a>
+          <div class="dropdown">
+            <a class="dropbtn" th:href="@{/hammer}" th:case="*">
+              <span class="hidden-xs" th:text="${user.getName()}+',您好！'"> 个人中心 </span>
+            </a>
+            <!--<button class="dropbtn">下拉菜单</button>-->
+            <div class="dropdown-content">
+              <a th:href="@{/user/info}">个人信息</a>
+              <a th:href="@{/user/interest}">我的关注</a>
+              <a th:href="@{/user/message}">我的消息</a>
+              <a th:href="@{/hammer/logout}">注销</a>
+            </div>
+          </div>
+        </li>
       </ul>
 
     </div>
     </nav>
+    <div class="overlay">
+      <!--登录弹框-->
+      <div class="acover"></div>
+      <div class="login">
+        <div class="login-screen">
+          <div class="app-title">
+            <h1 style="font-family:'Helvetica'">LOGIN</h1>
+          </div>
+          <form name="loginform" enctype="multipart/form-data" method="post">
+            <div class="login-form">
+              <div class="control-group">
+                <input type="number" class="login-field"  name="user_id" value="" placeholder="  user ID" id="login-name">
+                <label class="login-field-icon fui-user" for="login-name"></label>
+              </div>
+
+              <div class="control-group">
+                <input type="password" class="login-field"  name="password" value="" placeholder="  password" id="login-pass">
+                <label class="login-field-icon fui-lock" for="login-pass"></label>
+              </div><br>
+              <a class="btn blue btn-primary btn-large btn-block" onclick="dosubmit()" >登录</a>
+              <a class="login-link" style="color: black"  th:href="@{/hammer/register}">注册账号</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
 
     <div class="container">
       <article>

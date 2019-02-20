@@ -27,7 +27,10 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Integer user_id){ userRepository.deleteById(user_id);}
 
     @Override
-    public User getUserById(Integer user_id){ return userRepository.findById(user_id).get();}
+    public User getUserById(Integer user_id){
+        return userRepository.findById(user_id).isPresent()?
+                userRepository.findById(user_id).get():null;
+    }
 
     @Override
     public User getUserByEmailAndPwd(String email,String password){ return userRepository.findByEmailAndPassword(email, password);}
