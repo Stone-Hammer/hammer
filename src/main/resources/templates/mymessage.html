@@ -1,26 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Open Box CSS More Templates From www.cssmoban.com</title>
+<title>我的消息</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
-<script type="text/javascript" src="js/jquery-1.7.js"></script>
-<script type="text/javascript" src="js/jcarousellite_1.0.1.min.js"></script>
-<!--[if IE 6]> <link rel="stylesheet" type="text/css" href="css/ie.css" /> <![endif]-->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style2.css}" />
+	<link rel="icon" th:href="@{/img/timg.jpg}">
+<script th:src="@{/js/jquery-1.7.js}" ></script>
+<script th:src="@{/js/jcarousellite_1.0.1.min.js}"></script>
 <script type="text/javascript">
 $(function() {
     $(".gallery").jCarouselLite({
         btnNext: ".next",
         btnPrev: ".prev"
-    });时
+    });
 });
 </script>
 </head>
 <body>
-
 <div id="leftcont">
-	<div id="leftimg"><a title="home" href="index.html"><img alt="image description" src="img/timg.jpg" height="200" width="160"/></a></div>
+	<div id="leftimg"><a title="home" href="index.html"><img alt="image description" th:src="@{/img/timg.jpg}" height="200" width="160"/></a></div>
 	<div id="menu">
 		<ul>
 			<li><a title="systemmessage" href="index.html">系统通知</a></li>

@@ -20,8 +20,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     //返回一个用户的所有消息
-    public List<Message> getAllMessage(Integer user_id){
-        return messageRepository.findMessagesById(user_id);
+    public List<Message> getAllMessage(Integer user_id){ return messageRepository.findMessagesById(user_id);
     }
 
     @Override
