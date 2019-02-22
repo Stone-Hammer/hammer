@@ -35,10 +35,9 @@
         })
       })
       window.onload = function(){
-        var message = "[[${message}]]";
+        var message = "[[${message}]]"
         if (message!=null &&message!=""){
-          alert(message);
-          return false;
+          alert(message)
         }
       }
       function dosubmit() {
@@ -63,7 +62,7 @@
 
     </script>
 
-  <title>时事新闻 Lives - 石锤~您的资讯专家 </title>
+  <title>故事化专栏 Story - 石锤~您的资讯专家 </title>
   <meta name="description" content="持续追踪热点新闻事件"/>
   <link rel="stylesheet" th:href="@{/css/app.css}">
   </head>
@@ -82,14 +81,14 @@
         </a>
       </li>
 
-      <li class="active" >
+      <li >
         <a th:href="@{/lives}">
           <i data-feather="hash"></i>
           <span class="hidden-xs"> Live </span>
         </a>
       </li>
 
-      <li >
+      <li class="active" >
         <a th:href="@{/story}">
           <i data-feather="file-text"></i>
           <span class="hidden-xs"> 专栏 </span>
@@ -153,37 +152,36 @@
 
     <div class="container">
       <section class="list-container new-lives">
-        <h2> 时事新闻
-          <a th:href="@{/lives}" class="more">
+        <h2> 故事化专栏
+          <a th:href="@{/story}" class="more">
             <i data-feather="arrow-right-circle"></i>
           </a>
         </h2>
-
         <div class="list">
-          <div class="list-item live-item" th:each="lives:${page_lives}">
+          <div class="list-item event-item" th:each="story:${page_story}">
             <h3>
-              <a th:href="@{'/lives/info/'+${lives.getLives_id()}}"
-                 th:text="${lives.getLives_title()}">
-                新闻标题</a>
+              <a th:href="@{'/story/info/'+${story.getStory_id()}}"
+                 th:text="${story.getStory_title()}">
+                故事化新闻一
+              </a>
             </h3>
-            <blockquote>
-              <img th:src="@{/img/澎湃新闻.jpg}"  alt="" width="40" height="40">
-              <p>
-                <a th:href="@{'/lives/info/'+${lives.getLives_id()}}">
-                  <time th:text="${lives.getFormatTime()}">新闻日期</time>
-                  <span th:text="${lives.getDetails().get(0).getTitle()}"></span>
-                <cite th:text="${lives.getDetails().get(0).getName()}">
-                  新闻来源
-                </cite>
-                </a>
-              </p>
-            </blockquote>
+            <p class="summary" th:text="${story.getIntroduction()}">
+              故事化新闻一内容
+            </p>
 
             <footer>
               <div class="badge">
-                <!--<i data-feather="activity"></i>-->
-                <span th:text="${'新闻数量:'+lives.getLives_count()}"></span>
+                <!--<i data-feather="activity" ></i>-->
+                <span th:text="${story.getTags()}">新闻标签</span>
               </div>
+              <div class="badge">
+                <!--<i data-feather="user"></i>-->
+                <span th:text="${'关注人数:'+story.getInterest_count()}"></span>
+              </div>
+              <!--<div class="badge">-->
+              <!--<i data-feather="message-square"></i>-->
+              <!--？？-->
+              <!--</div>-->
             </footer>
           </div>
         </div>
@@ -191,12 +189,12 @@
       <nav class="pagination" >
         <ul>
           <li>
-            <a class="next" rel="next" th:if="${lastpage} ne 0" th:href="@{'/lives?page='+${lastpage}}">
+            <a class="next" rel="next" th:if="${lastpage} ne 0" th:href="@{'/story?page='+${lastpage}}">
               上一页
               &nbsp;
               <!--<i data-feather="arrow-right"></i>-->
             </a>&nbsp;&nbsp;
-            <a class="next" rel="next" th:if="${nextpage} ne 0" th:href="@{'/lives?page='+${nextpage}}">
+            <a class="next" rel="next" th:if="${nextpage} ne 0" th:href="@{'/story?page='+${nextpage}}">
               下一页
               &nbsp;
               <!--<i data-feather="arrow-right"></i>-->

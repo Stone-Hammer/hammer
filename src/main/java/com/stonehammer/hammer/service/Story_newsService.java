@@ -1,11 +1,9 @@
 package com.stonehammer.hammer.service;
 
 import com.stonehammer.hammer.entity.Story_news;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface Story_newsService {
 
     //添加故事化新闻
@@ -13,6 +11,9 @@ public interface Story_newsService {
 
     //返回所有故事化新闻
     List<Story_news> getAllStory();
+
+    //返回一定长度的时事新闻
+    List<Story_news> getStoryByIndex(int start_index,int length);
 
     //修改故事化新闻
     Story_news updateStory(Story_news story);

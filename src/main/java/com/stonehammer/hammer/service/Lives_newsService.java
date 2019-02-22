@@ -12,6 +12,9 @@ public interface Lives_newsService {
     //返回所有时事新闻
     List<Lives_news> getAllLives();
 
+    //返回一定长度的时事新闻
+    List<Lives_news> getLivesByIndex(int start_index,int length);
+
     //修改时事新闻
     Lives_news updateLives(Lives_news lives);
 

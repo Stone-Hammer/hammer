@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping("user")
+@RequestMapping("message")
 public class MessagePageController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class MessagePageController {
         List<Message> messagelists=messageService.getAllMessage(user.getUser_id());
         return "message";
     }
-    @GetMapping("/message")
+    @GetMapping("/user")
     public String messagehomepage(Model model){
         return "mymessage.html";
     }

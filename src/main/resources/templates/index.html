@@ -22,6 +22,7 @@
       <link rel="stylesheet" th:href="@{/css/login.css}">
       <script th:src="@{/js/jquery-1.12.3.min.js}" ></script>
       <script>
+        //var result = {test: "123", age: 20};
           jQuery(document).ready(function($) {
               $('.theme-login').click(function(){
                   $('.overlay').fadeIn(100);
@@ -33,6 +34,19 @@
                   $('.overlay').fadeOut(100);
                   $('.login').slideUp(200);
               })
+            // $("#test").click(function () {
+            //   console.log(result)
+            //   $.ajax({
+            //     url:"[[@{/hammer/test}]]",
+            //     data:JSON.stringify(result),
+            //     contentType: "application/json;charset=utf-8",
+            //     type:"get",
+            //     success:function (data) {
+            //       alert(data.name);
+            //       console.log(data);
+            //     }
+            //   });
+            // });
           })
           window.onload = function(){
             var message = "[[${message}]]"
@@ -59,7 +73,6 @@
                   th.submit();
               }
           }
-
       </script>
 
 
@@ -112,9 +125,9 @@
           </a>
           <!--<button class="dropbtn">下拉菜单</button>-->
           <div class="dropdown-content">
-            <a th:href="@{/user/info}">个人信息</a>
-            <a th:href="@{/user/interest}">我的关注</a>
-            <a th:href="@{/user/message}">我的消息</a>
+            <!--<a th:href="@{/user/info}">个人信息</a>-->
+            <a th:href="@{/interest/user}">我的关注</a>
+            <a th:href="@{/message/user}">我的消息</a>
             <a th:href="@{/hammer/logout}">注销</a>
           </div>
         </div>
@@ -159,6 +172,8 @@
           </a>
         </h2>
 
+        <!--<button id="test" name="test">test</button>-->
+        <div class="list">
         <div class="list">
           <div class="list-item live-item" th:each="lives:${indexlives}">
             <h3>
@@ -197,7 +212,7 @@
           </a>
         </h2>
         <div class="list">
-          <div class="list-item event-item" th:each="story:${storylist}">
+          <div class="list-item event-item" th:each="story:${indexstory}">
             <h3>
               <a th:href="@{'/story/info/'+${story.getStory_id()}}"
                  th:text="${story.getStory_title()}">

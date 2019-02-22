@@ -32,32 +32,38 @@ public class UserPageController {
     private static final int INDEX_LIVES_NUM = 3;
     private static final int INDEX_STORY_NUM = 3;
 
+    @GetMapping("test")
+    public String test(String test,Integer age){
+        System.out.println(test+"53223twe"+age);
+        return null;
+    }
     @GetMapping("")
     public String index(Model model, HttpSession httpSession) {
         User user = (User)httpSession.getAttribute("user");
         if(user!=null){
             model.addAttribute("user",user);
         }
-        List<Lives_news> list = lives_newsService.getAllLives();
-        model.addAttribute("liveslist", list);
-        List<Lives_news> indexlives = new ArrayList<Lives_news>();
-        for(int i=0;i<INDEX_LIVES_NUM;i++){
-            if(!list.isEmpty() && list.size()>=INDEX_LIVES_NUM){
-                indexlives.add(list.get(i));
-            }
-        }
+//        List<Lives_news> list = lives_newsService.getAllLives();
+//        model.addAttribute("liveslist", list);
+//        List<Lives_news> indexlives = new ArrayList<Lives_news>();
+//        for(int i=0;i<INDEX_LIVES_NUM;i++){
+//            if(!list.isEmpty() && list.size()>=INDEX_LIVES_NUM){
+//                indexlives.add(list.get(i));
+//            }
+//        }
+        List<Lives_news> indexlives = lives_newsService.getLivesByIndex(0,INDEX_LIVES_NUM);
         model.addAttribute("indexlives", indexlives);
-
-        List<Story_news> list1 = story_newsService.getAllStory();
-        model.addAttribute("storylist", list1);
-        List<Story_news> indexstory = new ArrayList<Story_news>();
-        for(int i=0;i<INDEX_STORY_NUM;i++){
-            if(!list1.isEmpty() && list1.size()>=INDEX_STORY_NUM){
-                indexstory.add(list1.get(i));
-            }
-
-        }
+        List<Story_news> indexstory = story_newsService.getStoryByIndex(0,INDEX_STORY_NUM);
+        model.addAttribute("indexstory", indexstory);
         return "index";
+//        List<Story_news> list1 = story_newsService.getAllStory();
+//        model.addAttribute("storylist", list1);
+//        List<Story_news> indexstory = new ArrayList<Story_news>();
+//        for(int i=0;i<INDEX_STORY_NUM;i++){
+//            if(!list1.isEmpty() && list1.size()>=INDEX_STORY_NUM){
+//                indexstory.add(list1.get(i));
+//            }
+//        }
     }
 
     @PostMapping("/login")

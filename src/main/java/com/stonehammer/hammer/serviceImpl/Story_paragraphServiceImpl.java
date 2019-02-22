@@ -24,6 +24,11 @@ public class Story_paragraphServiceImpl implements Story_paragraphService {
     }
 
     @Override
+    public List<Story_paragraph> getAllParagraphByStoryId(Integer story_id) {
+        return story_paragraphRepository.findParagraphByStoryId(story_id);
+    }
+
+    @Override
     public Story_paragraph updateParagraph(Story_paragraph story_paragraph) {
         return story_paragraphRepository.save(story_paragraph);
     }

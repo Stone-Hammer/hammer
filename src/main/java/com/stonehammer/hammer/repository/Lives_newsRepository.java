@@ -9,5 +9,9 @@ import java.util.List;
 public interface Lives_newsRepository extends JpaRepository<Lives_news,Integer> {
     @Query("select n from Lives_news n order by lives_time desc")
     List<Lives_news> findAllOrderByTimeDesc();
+    //取出按时间排序的一定长度的新闻
+    @Query(value = "select * from (select * from lives_news order by lives_time desc) as total limit ?1,?2"
+            ,nativeQuery = true)
+    List<Lives_news> findAllOrderByTimeDesc(int start_index,int length);
 
 }

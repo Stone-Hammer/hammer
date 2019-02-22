@@ -25,6 +25,11 @@ public class Story_newsServiceImpl implements Story_newsService {
     }
 
     @Override
+    public List<Story_news> getStoryByIndex(int start_index, int length) {
+        return story_newsRepository.findAllOrderByTimeDesc(start_index, length);
+    }
+
+    @Override
     public Story_news updateStory(Story_news story) {
         return story_newsRepository.save(story);
     }

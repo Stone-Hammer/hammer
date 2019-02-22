@@ -1,6 +1,7 @@
 package com.stonehammer.hammer.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -18,7 +19,10 @@ public class Story_paragraph {
     private String title;
     private String paragraph_text;
     private Date time;
-
+    public String getFormatTime() {
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(time);
+    }
     public Integer getParagraph_id() {
         return paragraph_id;
     }

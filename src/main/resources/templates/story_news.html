@@ -7,11 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="google-site-verification" content="JrywzhHu_lykmprlOZGqoqoEaFHsI_FgCiRmfJW7_LA"/>
   <meta property="og:site_name" content="石锤 App - 新闻持续跟踪">
-    <link rel="canonical" th:href="@{'/lives/info/'+${lives_news.getLives_id()}}">
-    <meta name="description" th:content="${lives_news.getIntroduction()}">
-    <meta property="title" th:content="${lives_news.getLives_title()}">
-    <meta property="description" th:content="${lives_news.getIntroduction()}">
-    <meta property="url" th:content="@{'/lives/info/'+${lives_news.getLives_id()}}">
+
+    <link rel="canonical" th:href="@{'/story/info/'+${story_news.getStory_id()}}">
+    <meta name="description" th:content="${story_news.getIntroduction()}">
+    <meta property="title" th:content="${story_news.getStory_title()}">
+    <meta property="description" th:content="${story_news.getIntroduction()}">
+    <meta property="url" th:content="@{'/story/info/'+${story_news.getStory_id()}}">
     <link rel="icon" th:href="@{/img/timg.jpg}">
     <link rel="apple-touch-icon" th:href="@{/img/timg.jpg}"/>
     <link rel="stylesheet" th:href="@{/css/normalize.css}">
@@ -33,6 +34,15 @@
           $('.acover').fadeIn(100);
           $('.login').slideDown(200);
         })
+        $('#follow-button').click(function(){
+          var user = "[[${user}]]";
+          if (user==null)
+            return;
+          $('.overlay').fadeIn(100);
+          $('.acover').fadeIn(100);
+          $('.login').slideDown(200);
+        })
+
         $('.acover').click(function(){
           $('.acover').fadeOut(100);
           $('.overlay').fadeOut(100);
@@ -110,25 +120,16 @@
       }
 
       window.onload = function(){
-        var date1 = "[[${lives_news.getFormatTime()}]]"; //开始时间
+        var date1 = "[[${story_news.getFormatTime()}]]"; //开始时间
         var interval_time = calculate_interval_time(date1);
-        document.getElementById("lives_interval_time").innerHTML = interval_time;
-        // var list = [[${lives_news.getDetails()}]];
-        // console.log(list);
-        // for(var i=0;i<list.length;i++){
-        //   var detail_time = i.time;
-        //   console.log(detail_time);
-        //   var interval_time = calculate_interval_time(date1);
-        //   document.getElementById("detail"+i.detail_id+"_interval_time").innerHTML = interval_time;
-        // }
-
+        document.getElementById("story_interval_time").innerHTML = interval_time;
       }
     </script>
 
-    <title th:text="${lives_news.getLives_title()}+' - 石锤~您的资讯专家'"></title>
+    <title th:text="${story_news.getStory_title()}+' - 石锤~您的资讯专家'"></title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
   </head>
-  <body class=" route-home ">
+  <body class=" route-event ">
   <nav id="app-nav">
     <div class="container d-flex align-items-center">
       <a th:href="@{/hammer}" class="branding">
@@ -143,14 +144,14 @@
           </a>
         </li>
 
-        <li class="active">
+        <li >
           <a th:href="@{/lives}">
             <i data-feather="hash"></i>
             <span class="hidden-xs"> Live </span>
           </a>
         </li>
 
-        <li >
+        <li class="active">
           <a th:href="@{/story}">
             <i data-feather="file-text"></i>
             <span class="hidden-xs"> 专栏 </span>
@@ -211,70 +212,135 @@
       </div>
 
     </div>
-
-    <div class="container">
-      <article>
-        <header class="header">
-          <h1 class="large-title" th:text="${lives_news.getLives_title()}">新闻标题</h1>
+    <article class="event">
+      <div class="container">
+        <header>
+          <h1 class="large-title" th:text="${story_news.getStory_title()}">新闻标题</h1>
           <p>
-            <cite class="author-date" th:text="${lives_news.getManager().getName()}
-            +' · '+${lives_news.getFormatTime()}">
+            <cite class="author-date" th:text="${story_news.getManager().getName()}
+            +' · '+${story_news.getFormatTime()}">
               管理员 · 时间 · </cite>
-            <cite class="author-date" id="lives_interval_time">
+            <cite class="author-date" id="story_interval_time">
               间隔时间</cite>
           </p>
+          <p id="follow-placeholder">
+            <a id="follow-button" href="javascript:;" th:if="${user==null}">
+              关注
+            </a>
+            <a th:href="@{'/interest/add/'+${story_news.getStory_id()}}"
+               id="follow-button" th:if="${user!=null && !isInterest}">
+              关注
+            </a>
+            <a th:href="@{'/interest/delete/'+${story_news.getStory_id()}}"
+               id="follow-button" th:if="${user!=null && isInterest}">
+              已关注
+            </a>
+            &nbsp; &nbsp;登录后可以关注该事件
+          </p>
 
-          <p class="summary" th:text="${lives_news.getIntroduction()}"></p>
+          <p class="readable event-overview" th:text="${story_news.getIntroduction()}">
+            事件概要</p>
+          <p>
+            <div class="badge"> <!--<i data-feather="tag"></i>-->
+              <span th:text="${story_news.getTags()}"></span>
+            </div> &nbsp;
+            <!--<span class="tag"> <i data-feather="tag"></i></span> &nbsp;-->
+            <!--<span class="tag"> <i data-feather="tag"></i></span> &nbsp;-->
+          </p>
         </header>
-        <div id="content-threads">
-          <h3 class="section-header">时间线</h3>
-          <section class="threads">
-            <nav class="tabs">
-              <ul>
-                <li class="active">
-                  <a href=""> 全部
-                    <span class="badge" th:text="${lives_news.getDetails().size()}">
-                      新闻个数
-                    </span>
-                  </a>
-                </li>
+      </div>
 
-                <!--<li >-->
-                  <!--<a href=""> 原创 <span class="badge">4</span> </a></li>-->
-
-                <!--<li >-->
-                  <!--<a href=""> 精选 <span class="badge">0</span> </a></li>-->
-              </ul>
-            </nav>
-            <br>
-            <div class="live-link" th:each="lives_detail:${lives_news.getDetails()}">
-              <div class="left-column">
-                <img src="新闻网图标" width="40" height="40"/>
+      <div>
+        <div id="content-persons">
+          <div class="container">
+            <h3 class="section-header">人物</h3>
+            <section class="persons">
+              <div class="event-person" th:each="story_figure:${story_news.getFigures()}">
+                <div class="left-column">
+                  <h3 th:text="${story_figure.getFigure_name()}"> 人物名称 </h3>
+                  <aside class="person-title" th:text="${story_figure.getIntroduction()}">
+                    人物介绍
+                  </aside>
+                  <aside class="person-status" th:text="${story_figure.getStatus()}">
+                    人物状态
+                  </aside>
+                </div>
+                <!--<img src="" alt="" width="50" height="50">-->
               </div>
-              <div class="right-column">
-                <aside class="line"></aside>
-                <header class="info">
-                  <time th:text="${lives_detail.getFormatTime()}"></time>
-                  <time th:id="'detail'+${lives_detail.getDetail_id()}+'_interval_time'">
-                    </time>
-                  &nbsp; &nbsp;
-                  <a th:href="${lives_detail.getUrl()}" target="_blank" rel="nofollow"
-                     th:text="${lives_detail.getName()}">新闻网名称</a>
-                  &nbsp;
-                  <span th:text="${lives_detail.getWords_count()}+'字'"></span>
-                  &nbsp;
+            </section>
 
-                </header>
-                <h3 th:text="${lives_detail.getTitle()}">新闻标题</h3>
-                <p class="readable summary" th:text="${lives_detail.getDetail_text()}">
-                  新闻内容
-                </p>
-              </div>
-            </div>
-          </section>
+          </div><!-- .container -->
         </div>
-      </article>
+        <div class="container">
+          <div id="content-threads">
+            <h3 class="section-header">时间线</h3>
+            <section class="threads" th:each="story_para:${story_paragraphs}">
+                <aside class="thread-date" th:text="${story_para.getFormatTime()}">
+                    年前</aside>
+                <div class="event-thread">
+                    <p class="readable" th:text="${story_para.getParagraph_text()}"></p>
+                    <blockquote class="event-source">
+                        <i data-feather="link"></i>
+                        <img src="" width="60" height="60"
+                             alt="">
 
-    </div>
+                        <div class="left-column">
+                            <h4 class="source-name" th:text="${story_para.getName()}">新闻网名称</h4>
+                            <p>
+                                <a target="_blank" th:href="${story_para.getUrl()}"
+                                   th:text="${story_para.getTitle()}">新闻网标题加链接</a>
+                            </p>
+                            <cite></cite>
+                        </div>
+
+                    </blockquote>
+                </div>
+              <!--<nav class="tabs">-->
+                <!--<ul>-->
+                  <!--<li class="active">-->
+                    <!--<a href=""> 全部-->
+                      <!--<span class="badge" th:text="${lives_news.getDetails().size()}">-->
+                        <!--新闻个数-->
+                      <!--</span>-->
+                    <!--</a>-->
+                  <!--</li>-->
+
+                  <!--&lt;!&ndash;<li >&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a href=""> 原创 <span class="badge">4</span> </a></li>&ndash;&gt;-->
+
+                  <!--&lt;!&ndash;<li >&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a href=""> 精选 <span class="badge">0</span> </a></li>&ndash;&gt;-->
+                <!--</ul>-->
+              <!--</nav>-->
+              <!--<br>-->
+              <!--<div class="live-link" th:each="lives_detail:${lives_news.getDetails()}">-->
+                <!--<div class="left-column">-->
+                  <!--<img src="新闻网图标" width="40" height="40"/>-->
+                <!--</div>-->
+                <!--<div class="right-column">-->
+                  <!--<aside class="line"></aside>-->
+                  <!--<header class="info">-->
+                    <!--<time th:text="${lives_detail.getFormatTime()}"></time>-->
+                    <!--<time th:id="'detail'+${lives_detail.getDetail_id()}+'_interval_time'">-->
+                      <!--</time>-->
+                    <!--&nbsp; &nbsp;-->
+                    <!--<a th:href="${lives_detail.getUrl()}" target="_blank" rel="nofollow"-->
+                       <!--th:text="${lives_detail.getName()}">新闻网名称</a>-->
+                    <!--&nbsp;-->
+                    <!--<span th:text="${lives_detail.getWords_count()}+'字'"></span>-->
+                    <!--&nbsp;-->
+
+                  <!--</header>-->
+                  <!--<h3 th:text="${lives_detail.getTitle()}">新闻标题</h3>-->
+                  <!--<p class="readable summary" th:text="${lives_detail.getDetail_text()}">-->
+                    <!--新闻内容-->
+                  <!--</p>-->
+                <!--</div>-->
+              <!--</div>-->
+            </section>
+          </div>
+        </div>
+      </div>
+    </article>
   </body>
 </html>

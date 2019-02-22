@@ -1,11 +1,9 @@
 package com.stonehammer.hammer.service;
 
 import com.stonehammer.hammer.entity.Interest;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface InterestService {
 
     //添加关注
@@ -13,6 +11,12 @@ public interface InterestService {
 
     //返回所有关注
     List<Interest> getAllInterest();
+
+    //返回指定用户的所有关注
+    List<Interest> getAllInterest(Integer user_id);
+
+    //返回指定用户和新闻的关注数据
+    Interest getInterestById(Integer user_id,Integer story_id);
 
     //修改关注
     Interest updateInterest(Interest interest);

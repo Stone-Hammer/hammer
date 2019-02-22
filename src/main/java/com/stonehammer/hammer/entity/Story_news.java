@@ -1,6 +1,7 @@
 package com.stonehammer.hammer.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +25,22 @@ public class Story_news {
     @JoinColumn(name = "story_id")
     private List<Story_paragraph> paragraphs;
 
-    @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
+    @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinColumn(name = "story_id")
     private List<Story_figure> figures;
+
+    public String getFormatTime() {
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(story_time);
+    }
+
+    public List<Story_figure> getFigures() {
+        return figures;
+    }
+
+    public void setFigures(List<Story_figure> figures) {
+        this.figures = figures;
+    }
 
     public Integer getStory_id() {
         return story_id;

@@ -1,20 +1,83 @@
 package com.stonehammer.hammer.controller;
 
+import com.stonehammer.hammer.entity.Interest;
 import com.stonehammer.hammer.entity.Story_news;
+import com.stonehammer.hammer.entity.Story_paragraph;
+import com.stonehammer.hammer.entity.User;
+import com.stonehammer.hammer.service.InterestService;
 import com.stonehammer.hammer.service.Story_newsService;
+import com.stonehammer.hammer.service.Story_paragraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping("storys")
+@RequestMapping("story")
 public class Story_newsPageController {
 
     @Autowired
     private Story_newsService story_newsService;
+    @Autowired
+    private Story_paragraphService story_paragraphService;
+    @Autowired
+    private InterestService interestService;
+
+    private static final int STORY_PER_PAGE = 3;
+    @GetMapping("")
+    public String show_story_list(Model model, HttpSession httpSession
+            ,Integer page){
+        model.addAttribute("user",httpSession.getAttribute("user"));
+        if (page==null)
+            page=1;
+        if (page==0){
+            return "story";
+        }
+        List<Story_news> page_story = story_newsService.getStoryByIndex
+                ((page-1)*STORY_PER_PAGE,STORY_PER_PAGE);
+        if (page_story.isEmpty()){
+            page_story = story_newsService.getStoryByIndex
+                    ((page-2)*STORY_PER_PAGE,STORY_PER_PAGE);
+            model.addAttribute("page_story", page_story);
+            model.addAttribute("message", "Sorry~暂无更多新闻");
+            model.addAttribute("lastpage",page-2);
+            model.addAttribute("nextpage",page);
+            return "story";
+        }
+        model.addAttribute("lastpage",page-1);
+        model.addAttribute("nextpage",page+1);
+        model.addAttribute("page_story", page_story);
+        return "story";
+    }
+
+    @GetMapping("/info/{id}")
+    public String show_story_info(Model model, HttpSession httpSession
+            ,@PathVariable("id") Integer story_id){
+        User user = (User) httpSession.getAttribute("user");
+        model.addAttribute("user",user);
+        Story_news story_news=story_newsService.getStoryById(story_id);
+        boolean isInterest = false;
+        if (user!=null){
+            List<Interest> interests = user.getInterests();
+            if (interests==null)
+                interests=interestService.getAllInterest(user.getUser_id());
+            for (Interest interest:interests){
+                if (story_id==interest.getStory_news().getStory_id()){
+                    isInterest = true;
+                    break;
+                }
+            }
+            model.addAttribute("isInterest",isInterest);
+        }
+
+        List<Story_paragraph> story_paragraphs=story_paragraphService.getAllParagraphByStoryId(story_id);
+        model.addAttribute("story_news",story_news);
+        model.addAttribute("story_paragraphs",story_paragraphs);
+        return "story_news";
+    }
 
     @GetMapping("/all")
     public String getAllStory(Model model){
