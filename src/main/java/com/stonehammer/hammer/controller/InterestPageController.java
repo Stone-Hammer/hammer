@@ -67,23 +67,24 @@ public class InterestPageController {
         Interest interest = new Interest();
         interest.setUser(user);
         Story_news story_news = story_newsService.getStoryById(story_id);
+        boolean isInterest = false;
+        String message = "";
         if (story_news==null){
-            model.addAttribute("message", "错误，关注失败！");
-            model.addAttribute("story_news", story_news);
-            model.addAttribute("isInterest",false);
-            return "story_news";
+            message = "错误，关注失败！";
         }
         if(interestService.getInterestById(user.getUser_id(),story_id)!=null){
-            model.addAttribute("message", "您已关注该新闻！");
-            model.addAttribute("story_news", story_news);
-            model.addAttribute("isInterest",true);
-            return "story_news";
+            message = "您已关注该新闻！";
+            isInterest = true;
         }
+        //添加一条关注的数据
         interest.setStory_news(story_news);
         interestService.addInterest(interest);
-        model.addAttribute("message", "关注成功！");
+
+        isInterest = true;
+        message = "关注成功！";
+        model.addAttribute("isInterest",isInterest);
+        model.addAttribute("message", message);
         model.addAttribute("story_news", story_news);
-        model.addAttribute("isInterest",true);
         return "story_news";
     }
 

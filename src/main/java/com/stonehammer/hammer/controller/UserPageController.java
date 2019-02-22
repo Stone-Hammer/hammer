@@ -32,11 +32,11 @@ public class UserPageController {
     private static final int INDEX_LIVES_NUM = 3;
     private static final int INDEX_STORY_NUM = 3;
 
-    @GetMapping("test")
-    public String test(String test,Integer age){
-        System.out.println(test+"53223twe"+age);
-        return null;
-    }
+//    @GetMapping("test")
+//    public String test(String test,Integer age){
+//        System.out.println(test+"53223twe"+age);
+//        return null;
+//    }
     @GetMapping("")
     public String index(Model model, HttpSession httpSession) {
         User user = (User)httpSession.getAttribute("user");

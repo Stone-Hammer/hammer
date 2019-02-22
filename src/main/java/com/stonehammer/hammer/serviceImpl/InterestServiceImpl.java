@@ -40,10 +40,11 @@ public class InterestServiceImpl implements InterestService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public void deleteInterest(Integer interest_id) {
-        interestRepository.deleteById(interest_id);
-        interestRepository.flush();
+//        interestRepository.deleteById(interest_id);
+//        interestRepository.flush();
+        interestRepository.deleteByInterestId(interest_id);
     }
 
     @Override

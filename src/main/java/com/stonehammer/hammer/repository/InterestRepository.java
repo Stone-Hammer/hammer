@@ -2,7 +2,9 @@ package com.stonehammer.hammer.repository;
 
 import com.stonehammer.hammer.entity.Interest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,4 +18,9 @@ public interface InterestRepository extends JpaRepository<Interest,Integer> {
 //    @Query(value = "select * from interest where user_id=?1 order by interest_time desc"
 //            ,nativeQuery = true)
     Interest findInterestById(Integer user_id, Integer story_id);
+
+    @Modifying
+    @Query("delete from Interest i where i.interest_id=?1 ")
+    @Transactional
+    int deleteByInterestId(Integer interest_id);
 }

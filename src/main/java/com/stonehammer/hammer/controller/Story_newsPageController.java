@@ -61,17 +61,11 @@ public class Story_newsPageController {
         Story_news story_news=story_newsService.getStoryById(story_id);
         boolean isInterest = false;
         if (user!=null){
-            List<Interest> interests = user.getInterests();
-            if (interests==null)
-                interests=interestService.getAllInterest(user.getUser_id());
-            for (Interest interest:interests){
-                if (story_id==interest.getStory_news().getStory_id()){
-                    isInterest = true;
-                    break;
-                }
-            }
-            model.addAttribute("isInterest",isInterest);
+            Interest interest = interestService.getInterestById(user.getUser_id(),story_id);
+            if (interest!=null)
+                isInterest = true;
         }
+        model.addAttribute("isInterest",isInterest);
 
         List<Story_paragraph> story_paragraphs=story_paragraphService.getAllParagraphByStoryId(story_id);
         model.addAttribute("story_news",story_news);

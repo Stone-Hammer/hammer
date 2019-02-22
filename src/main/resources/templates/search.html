@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="google-site-verification" content="JrywzhHu_lykmprlOZGqoqoEaFHsI_FgCiRmfJW7_LA"/>
+  <meta property="og:site_name" content="石锤 App - 新闻持续跟踪">
+  <link rel="icon" th:href="@{/img/timg.jpg}">
+  <link rel="apple-touch-icon" th:href="@{/img/timg.jpg}"/>
+  <link rel="stylesheet" th:href="@{/css/normalize.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/animate.css}">
+  <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+
+  <link rel="stylesheet" th:href="@{/css/dropdown.css}">
+
+  <script th:src="@{/js/feather.min.js}" ></script>
+      <!--登录弹框-->
+      <link rel="stylesheet" th:href="@{/css/login.css}">
+      <script th:src="@{/js/jquery-1.12.3.min.js}" ></script>
+      <script>
+        //var result = {test: "123", age: 20};
+          jQuery(document).ready(function($) {
+              $('.theme-login').click(function(){
+                  $('.overlay').fadeIn(100);
+                  $('.acover').fadeIn(100);
+                  $('.login').slideDown(200);
+              })
+              $('.acover').click(function(){
+                  $('.acover').fadeOut(100);
+                  $('.overlay').fadeOut(100);
+                  $('.login').slideUp(200);
+              })
+          })
+          window.onload = function(){
+            var message = "[[${message}]]"
+            if (message!=null &&message!=""){
+              alert(message)
+            }
+          }
+          function dosubmit() {
+              var th = loginform;
+
+              if (th.user_id.value == "") {
+                  alert("用户名不能为空");
+                  th.user_id.focus();
+                  return false;
+              }
+
+              else if (th.password.value == "") {
+                  alert("密码不能为空");
+                  th.password.focus();
+                  return false;
+              }
+              else{
+                  th.action="[[@{/hammer/login}]]";
+                  th.submit();
+              }
+          }
+        function dosearch() {
+          var th1 = search;
+          if (th1.words.value == "") {
+            alert("输入不能为空");
+            th1.words.focus();
+            return false;
+          }
+          else{
+            th1.action="[[@{/search/do}]]";
+            th1.submit();
+          }
+        }
+      </script>
+
+
+  <title>搜索 Search - 石锤~您的资讯专家 </title>
+  <meta name="description" content="持续追踪热点新闻事件"/>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  </head>
+  <body class="search">
+    <nav id="app-nav">
+    <div class="container d-flex align-items-center">
+      <a th:href="@{/hammer}" class="branding">
+        石锤
+        <small class="hidden-xs">beta</small>
+      </a>
+      <ul>
+      <li >
+        <a th:href="@{/hammer}">
+          <i data-feather="home"></i>
+          <span> 首页 </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/lives}">
+          <i data-feather="hash"></i>
+          <span class="hidden-xs"> Live </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/story}">
+          <i data-feather="file-text"></i>
+          <span class="hidden-xs"> 专栏 </span>
+        </a>
+      </li>
+
+      <li class="active">
+        <a th:href="@{/search}">
+          <i data-feather="search"></i>
+          <span class="hidden-xs"> 搜索 </span>
+        </a>
+      </li>
+      <li class="btn-cta" th:switch="${user}">
+        <a class="theme-login" href="javascript:;" th:case="${null}">
+          <span>登录/注册</span>
+        </a>
+        <div class="dropdown">
+          <a class="dropbtn" th:href="@{/hammer}" th:case="*">
+            <span class="hidden-xs" th:text="${user.getName()}+',您好！'"> 个人中心 </span>
+          </a>
+          <!--<button class="dropbtn">下拉菜单</button>-->
+          <div class="dropdown-content">
+            <!--<a th:href="@{/user/info}">个人信息</a>-->
+            <a th:href="@{/interest/user}">我的关注</a>
+            <a th:href="@{/message/user}">我的消息</a>
+            <a th:href="@{/hammer/logout}">注销</a>
+          </div>
+        </div>
+      </li>
+      </ul>
+
+    </div>
+    </nav>
+    <div class="overlay">
+      <!--登录弹框-->
+      <div class="acover"></div>
+      <div class="login">
+        <div class="login-screen">
+          <div class="app-title">
+            <h1 style="font-family:'Helvetica'">LOGIN</h1>
+          </div>
+          <form name="loginform" enctype="multipart/form-data" method="post">
+            <div class="login-form">
+              <div class="control-group">
+                <input type="number" class="login-field"  name="user_id" value="" placeholder="  user ID" id="login-name">
+                <label class="login-field-icon fui-user" for="login-name"></label>
+              </div>
+
+              <div class="control-group">
+                <input type="password" class="login-field"  name="password" value="" placeholder="  password" id="login-pass">
+                <label class="login-field-icon fui-lock" for="login-pass"></label>
+              </div><br>
+              <a class="btn blue btn-primary btn-large btn-block" onclick="dosubmit()" >登录</a>
+              <a class="login-link" style="color: black"  th:href="@{/hammer/register}">注册账号</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <header>
+      <form name="search">
+        <div class="container">
+          <div>
+            <div class="search-box">
+              <input type="text" name="words"
+                     placeholder="输入关键词进行搜索"
+                     value=""
+                     class="form-control"
+              />
+
+              <button class="btn blue btn-primary" onclick="dosearch()" >搜索</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </header>
+
+    <div class="container">
+      <aside class="search-hits-info">
+        找到  个结果
+      </aside>
+      <div class="list-item live-item" th:each="lives:${liveslist}">
+        <h3>
+          <span class="object-label"> <i data-feather="hash"></i> Live</span>
+          <a th:href="@{'/lives/info/'+${lives.getLives_id()}}"
+                 th:text="${lives.getLives_title()}">
+                新闻标题</a>
+        </h3>
+        <blockquote>
+          <img th:src="@{/img/澎湃新闻.jpg}"  alt="" width="40" height="40">
+          <p>
+            <a th:href="@{'/lives/info/'+${lives.getLives_id()}}">
+              <time th:text="${lives.getFormatTime()}">新闻日期</time>
+              <span th:text="${lives.getDetails().get(0).getTitle()}"></span>
+              <cite th:text="${lives.getDetails().get(0).getName()}">
+                新闻来源
+              </cite>
+            </a>
+          </p>
+        </blockquote>
+        <footer>
+          <div class="badge">
+            <!--<i data-feather="activity"></i>-->
+            <span th:text="${'新闻数量:'+lives.getLives_count()}"></span>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+      <!--<section class="list-container new-events">-->
+
+        <!--<h2>故事化专栏-->
+          <!--<a th:href="@{/story}" class="more">-->
+            <!--<i data-feather="arrow-right-circle"></i>-->
+          <!--</a>-->
+        <!--</h2>-->
+        <!--<div class="list">-->
+          <!--<div class="list-item event-item" th:each="story:${indexstory}">-->
+            <!--<h3>-->
+              <!--<a th:href="@{'/story/info/'+${story.getStory_id()}}"-->
+                 <!--th:text="${story.getStory_title()}">-->
+                <!--故事化新闻一-->
+              <!--</a>-->
+            <!--</h3>-->
+            <!--<p class="summary" th:text="${story.getIntroduction()}">-->
+              <!--故事化新闻一内容-->
+            <!--</p>-->
+
+            <!--<footer>-->
+              <!--<div class="badge">-->
+                <!--&lt;!&ndash;<i data-feather="activity" ></i>&ndash;&gt;-->
+                <!--<span th:text="${story.getTags()}">新闻标签</span>-->
+              <!--</div>-->
+              <!--<div class="badge">-->
+                <!--&lt;!&ndash;<i data-feather="user"></i>&ndash;&gt;-->
+                <!--<span th:text="${'关注人数:'+story.getInterest_count()}"></span>-->
+              <!--</div>-->
+              <!--&lt;!&ndash;<div class="badge">&ndash;&gt;-->
+                <!--&lt;!&ndash;<i data-feather="message-square"></i>&ndash;&gt;-->
+                <!--&lt;!&ndash;？？&ndash;&gt;-->
+              <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--</footer>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</section>-->
+  </body>
+</html>

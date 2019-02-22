@@ -36,11 +36,11 @@
         })
         $('#follow-button').click(function(){
           var user = "[[${user}]]";
-          if (user==null)
-            return;
-          $('.overlay').fadeIn(100);
-          $('.acover').fadeIn(100);
-          $('.login').slideDown(200);
+          if (user==""){
+            $('.overlay').fadeIn(100);
+            $('.acover').fadeIn(100);
+            $('.login').slideDown(200);
+          }
         })
 
         $('.acover').click(function(){
