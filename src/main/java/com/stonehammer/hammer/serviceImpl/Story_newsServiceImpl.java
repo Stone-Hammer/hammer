@@ -30,6 +30,11 @@ public class Story_newsServiceImpl implements Story_newsService {
     }
 
     @Override
+    public List<Story_news> getStoryByWords(String words) {
+        return story_newsRepository.findStory_newsByWords(words);
+    }
+
+    @Override
     public Story_news updateStory(Story_news story) {
         return story_newsRepository.save(story);
     }

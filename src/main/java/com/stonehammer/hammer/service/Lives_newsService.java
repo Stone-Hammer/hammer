@@ -15,6 +15,9 @@ public interface Lives_newsService {
     //返回一定长度的时事新闻
     List<Lives_news> getLivesByIndex(int start_index,int length);
 
+    //返回标题中有words的时事新闻
+    List<Lives_news> getLivesByWords(String words);
+
     //修改时事新闻
     Lives_news updateLives(Lives_news lives);
 

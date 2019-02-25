@@ -12,6 +12,9 @@ public interface Lives_detailService {
     //返回所有时事详情
     List<Lives_detail> getAllLives_detail();
 
+    //返回标题中有words的时事详情新闻
+    List<Lives_detail> getLives_detailByWords(String words);
+
     //修改时事详情
     Lives_detail updateLives_detail(Lives_detail lives_detail);
 

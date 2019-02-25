@@ -13,4 +13,7 @@ public interface Story_newsRepository extends JpaRepository<Story_news,Integer> 
     @Query(value = "select * from (select * from story_news order by story_time desc) as total limit ?1,?2"
             ,nativeQuery = true)
     List<Story_news> findAllOrderByTimeDesc(int start_index,int length);
+
+    @Query(value = "select * from story_news where locate(?1,story_title)>0 order by story_time desc",nativeQuery = true)
+    List<Story_news> findStory_newsByWords(String words);
 }

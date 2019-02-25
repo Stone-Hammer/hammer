@@ -181,9 +181,9 @@
     </header>
 
     <div class="container">
-      <aside class="search-hits-info">
-        找到  个结果
-      </aside>
+      <aside class="search-hits-info" th:text="'找到 '+${(liveslist==null||liveslist.isEmpty()?0:liveslist.size())+
+      (storylist==null||storylist.isEmpty()?0:storylist.size())+
+      (detaillist==null||detaillist.isEmpty()?0:detaillist.size())}+' 个结果'"></aside>
       <div class="list-item live-item" th:each="lives:${liveslist}">
         <h3>
           <span class="object-label"> <i data-feather="hash"></i> Live</span>
@@ -210,43 +210,53 @@
           </div>
         </footer>
       </div>
+
+      <div class="list-item event-item" th:each="story:${storylist}">
+        <h3>
+          <span class="object-label"> <i data-feather="file-text"></i> 专栏</span>
+          <a th:href="@{'/story/info/'+${story.getStory_id()}}"
+             th:text="${story.getStory_title()}">
+            故事化新闻一
+          </a>
+        </h3>
+        <p class="summary" th:text="${story.getIntroduction()}">
+          故事化新闻一内容
+        </p>
+
+        <footer>
+          <div class="badge">
+            <!--<i data-feather="activity" ></i>-->
+            <span th:text="${story.getTags()}">新闻标签</span>
+          </div>
+          <div class="badge">
+            <!--<i data-feather="user"></i>-->
+            <span th:text="${'关注人数:'+story.getInterest_count()}"></span>
+          </div>
+          <!--<div class="badge">-->
+          <!--<i data-feather="message-square"></i>-->
+          <!--？？-->
+          <!--</div>-->
+        </footer>
+      </div>
+
+      <div class="search-link" th:each="detail:${detaillist}">
+        <h3>
+          <a th:href="${detail.getUrl()}" target="_blank" rel="nofollow"
+          th:text="${detail.getTitle()}">
+            新闻详情
+          </a>
+        </h3>
+
+        <p class="summary" th:text="${detail.getDetail_text()}">
+          新闻详情内容
+        </p>
+
+        <div class="source">
+          <cite th:text="${detail.getName()}">新闻网名称</cite>
+          <time th:text="${detail.getFormatTime()}">时间</time>
+        </div>
+      </div>
     </div>
 
-      <!--<section class="list-container new-events">-->
-
-        <!--<h2>故事化专栏-->
-          <!--<a th:href="@{/story}" class="more">-->
-            <!--<i data-feather="arrow-right-circle"></i>-->
-          <!--</a>-->
-        <!--</h2>-->
-        <!--<div class="list">-->
-          <!--<div class="list-item event-item" th:each="story:${indexstory}">-->
-            <!--<h3>-->
-              <!--<a th:href="@{'/story/info/'+${story.getStory_id()}}"-->
-                 <!--th:text="${story.getStory_title()}">-->
-                <!--故事化新闻一-->
-              <!--</a>-->
-            <!--</h3>-->
-            <!--<p class="summary" th:text="${story.getIntroduction()}">-->
-              <!--故事化新闻一内容-->
-            <!--</p>-->
-
-            <!--<footer>-->
-              <!--<div class="badge">-->
-                <!--&lt;!&ndash;<i data-feather="activity" ></i>&ndash;&gt;-->
-                <!--<span th:text="${story.getTags()}">新闻标签</span>-->
-              <!--</div>-->
-              <!--<div class="badge">-->
-                <!--&lt;!&ndash;<i data-feather="user"></i>&ndash;&gt;-->
-                <!--<span th:text="${'关注人数:'+story.getInterest_count()}"></span>-->
-              <!--</div>-->
-              <!--&lt;!&ndash;<div class="badge">&ndash;&gt;-->
-                <!--&lt;!&ndash;<i data-feather="message-square"></i>&ndash;&gt;-->
-                <!--&lt;!&ndash;？？&ndash;&gt;-->
-              <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--</footer>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</section>-->
   </body>
 </html>

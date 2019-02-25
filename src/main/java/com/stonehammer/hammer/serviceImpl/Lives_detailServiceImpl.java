@@ -25,6 +25,11 @@ public class Lives_detailServiceImpl implements Lives_detailService {
     }
 
     @Override
+    public List<Lives_detail> getLives_detailByWords(String words) {
+        return lives_detailRepository.findLives_detailByWords(words);
+    }
+
+    @Override
     public Lives_detail updateLives_detail(Lives_detail lives_detail){
         return lives_detailRepository.save(lives_detail);
     }

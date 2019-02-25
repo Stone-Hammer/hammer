@@ -15,6 +15,9 @@ public interface Story_newsService {
     //返回一定长度的时事新闻
     List<Story_news> getStoryByIndex(int start_index,int length);
 
+    //返回标题中有words的故事化新闻
+    List<Story_news> getStoryByWords(String words);
+
     //修改故事化新闻
     Story_news updateStory(Story_news story);
 

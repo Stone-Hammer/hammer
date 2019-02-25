@@ -14,4 +14,9 @@ public interface Lives_newsRepository extends JpaRepository<Lives_news,Integer> 
             ,nativeQuery = true)
     List<Lives_news> findAllOrderByTimeDesc(int start_index,int length);
 
+    @Query(value = "select * from lives_news where locate(?1,lives_title)>0 order by lives_time desc",nativeQuery = true)
+    List<Lives_news> findLives_newsByWords(String words);
+
+
+
 }
