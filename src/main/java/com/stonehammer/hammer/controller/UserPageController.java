@@ -114,6 +114,12 @@ public class UserPageController {
         return "register";
     }
 
+    @GetMapping("/userinfo")
+    public String userinfo(Model model, HttpSession httpSession) {
+        User user = (User)httpSession.getAttribute("user");
+        model.addAttribute("user",user);
+        return "user_info";
+    }
     @RequestMapping("/logout")
     public String logout(Model model, HttpSession httpSession){
         //清除session数据

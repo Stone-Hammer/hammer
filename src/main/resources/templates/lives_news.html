@@ -173,7 +173,7 @@
             </a>
             <!--<button class="dropbtn">下拉菜单</button>-->
             <div class="dropdown-content">
-              <!--<a th:href="@{/user/info}">个人信息</a>-->
+              <a th:href="@{/hammer/userinfo}">个人信息</a>
               <a th:href="@{/interest/user}">我的关注</a>
               <a th:href="@{/message/user}">我的消息</a>
               <a th:href="@{/hammer/logout}">注销</a>
@@ -249,7 +249,8 @@
             <br>
             <div class="live-link" th:each="lives_detail:${lives_news.getDetails()}">
               <div class="left-column">
-                <img src="新闻网图标" width="40" height="40"/>
+                <img th:src="${lives_detail.getSource_website().getWebsite_icon()}"
+                     alt="" width="40" height="40">
               </div>
               <div class="right-column">
                 <aside class="line"></aside>
@@ -259,7 +260,7 @@
                     </time>
                   &nbsp; &nbsp;
                   <a th:href="${lives_detail.getUrl()}" target="_blank" rel="nofollow"
-                     th:text="${lives_detail.getName()}">新闻网名称</a>
+                     th:text="${lives_detail.getSource_website().getWebsite_name()}">新闻网名称</a>
                   &nbsp;
                   <span th:text="${lives_detail.getWords_count()}+'字'"></span>
                   &nbsp;

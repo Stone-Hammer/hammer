@@ -19,15 +19,28 @@ public class MessagePageController {
     @Autowired
     private MessageService messageService;
 
+    private boolean validate(User user){
+        if (user==null||user.getUser_id()==null||
+                user.getName()==null||user.getName().equals("")||
+                user.getPassword()==null||user.getPassword().equals("")){
+            return false;
+        }
+        return true;
+    }
 
-    public String allmessage(Model model, HttpSession httpSession){
-        User user = (User)httpSession.getAttribute("user");
-        model.addAttribute("user",httpSession.getAttribute("user"));
-        List<Message> messagelists=messageService.getAllMessage(user.getUser_id());
-        return "message";
-    }
     @GetMapping("/user")
-    public String messagehomepage(Model model){
-        return "mymessage.html";
+    public String message(Model model, HttpSession httpSession){
+        User user = (User)httpSession.getAttribute("user");
+        if (!validate(user)){
+            model.addAttribute("message", "登录失效 请重新登录~");
+            return "hammer";
+        }
+        model.addAttribute("user",user);
+        List<Message> messages=messageService.getAllMessage(user.getUser_id());
+        model.addAttribute("messages",messages);
+        return "user_message";
     }
+//    public String messagehomepage(Model model){
+//        return "mymessage.html";
+//    }
 }

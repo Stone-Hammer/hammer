@@ -35,9 +35,10 @@ public class Lives_detailPageController {
         Lives_detail newDetail=new Lives_detail();
         newDetail.setDetail_id(detail.getDetail_id());
         newDetail.setDetail_text(detail.getDetail_text());
-        newDetail.setIcon(detail.getIcon());
+//        newDetail.setName(detail.getName());
+//        newDetail.setIcon(detail.getIcon());
+        newDetail.setSource_website(detail.getSource_website());
         newDetail.setLives_news(detail.getLives_news());
-        newDetail.setName(detail.getName());
         newDetail.setTime(detail.getTime());
         newDetail.setTitle(detail.getTitle());
         newDetail.setUrl(detail.getUrl());

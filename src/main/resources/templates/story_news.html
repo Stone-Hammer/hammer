@@ -174,7 +174,7 @@
             </a>
             <!--<button class="dropbtn">下拉菜单</button>-->
             <div class="dropdown-content">
-              <!--<a th:href="@{/user/info}">个人信息</a>-->
+              <a th:href="@{/hammer/userinfo}">个人信息</a>
               <a th:href="@{/interest/user}">我的关注</a>
               <a th:href="@{/message/user}">我的消息</a>
               <a th:href="@{/hammer/logout}">注销</a>
@@ -281,11 +281,11 @@
                     <p class="readable" th:text="${story_para.getParagraph_text()}"></p>
                     <blockquote class="event-source">
                         <i data-feather="link"></i>
-                        <img src="" width="60" height="60"
+                        <img th:src="${story_para.getSource_website().getWebsite_icon()}" width="60" height="60"
                              alt="">
 
                         <div class="left-column">
-                            <h4 class="source-name" th:text="${story_para.getName()}">新闻网名称</h4>
+                            <h4 class="source-name" th:text="${story_para.getSource_website().getWebsite_name()}">新闻网名称</h4>
                             <p>
                                 <a target="_blank" th:href="${story_para.getUrl()}"
                                    th:text="${story_para.getTitle()}">新闻网标题加链接</a>

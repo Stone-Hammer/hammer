@@ -20,6 +20,11 @@
     <script th:src="@{/js/feather.min.js}" ></script>
     <script>
       window.onload = function(){
+        var user = "[[${user}]]";
+        if (user==""){
+          alert("登录失效，请重新登录");
+          window.location.href = "[[@{/hammer}]]"
+        }
         var message = "[[${message}]]"
         if (message!=null &&message!=""){
           alert(message)
@@ -73,7 +78,7 @@
             </a>
             <!--<button class="dropbtn">下拉菜单</button>-->
             <div class="dropdown-content">
-              <!--<a th:href="@{/user/info}">个人信息</a>-->
+              <a th:href="@{/hammer/userinfo}">个人信息</a>
               <a th:href="@{/interest/user}">我的关注</a>
               <a th:href="@{/message/user}">我的消息</a>
               <a th:href="@{/hammer/logout}">注销</a>

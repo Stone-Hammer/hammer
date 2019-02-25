@@ -1,6 +1,7 @@
 package com.stonehammer.hammer.entity;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -13,6 +14,11 @@ public class Message {
     private User user;
     private String text;
     private Date time;
+
+    public String getFormatTime() {
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(time);
+    }
 
     public Integer getMessage_id() {
         return message_id;
