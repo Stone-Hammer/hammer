@@ -35,9 +35,10 @@
         })
       })
       window.onload = function(){
-        var message = "[[${message}]]"
+        var message = "[[${message}]]";
         if (message!=null &&message!=""){
-          alert(message)
+          alert(message);
+          return false;
         }
       }
       function dosubmit() {
@@ -111,9 +112,9 @@
             </a>
             <!--<button class="dropbtn">下拉菜单</button>-->
             <div class="dropdown-content">
-              <a th:href="@{/user/info}">个人信息</a>
-              <a th:href="@{/user/interest}">我的关注</a>
-              <a th:href="@{/user/message}">我的消息</a>
+              <a th:href="@{/hammer/userinfo}">个人信息</a>
+              <a th:href="@{/interest/user}">我的关注</a>
+              <a th:href="@{/message/user}">我的消息</a>
               <a th:href="@{/hammer/logout}">注销</a>
             </div>
           </div>
@@ -159,21 +160,23 @@
         </h2>
 
         <div class="list">
-          <div class="list-item live-item" th:each="lives:${liveslist}">
+          <div class="list-item live-item" th:each="lives:${page_lives}">
             <h3>
               <a th:href="@{'/lives/info/'+${lives.getLives_id()}}"
                  th:text="${lives.getLives_title()}">
                 新闻标题</a>
             </h3>
             <blockquote>
-              <img th:src="@{/img/澎湃新闻.jpg}"  alt="" width="40" height="40">
+              <!--<img th:src="@{/img/澎湃新闻.jpg}"  alt="" width="40" height="40">-->
+              <img th:src="${lives.getDetails().get(0).getSource_website().getWebsite_icon()}"
+                   alt="" width="40" height="40">
               <p>
                 <a th:href="@{'/lives/info/'+${lives.getLives_id()}}">
                   <time th:text="${lives.getFormatTime()}">新闻日期</time>
                   <span th:text="${lives.getDetails().get(0).getTitle()}"></span>
-                <cite th:text="${lives.getDetails().get(0).getName()}">
-                  新闻来源
-                </cite>
+                  <cite th:text="${lives.getDetails().get(0).getSource_website().getWebsite_name()}">
+                    新闻来源
+                  </cite>
                 </a>
               </p>
             </blockquote>
@@ -187,10 +190,15 @@
           </div>
         </div>
       </section>
-      <nav class="pagination">
+      <nav class="pagination" >
         <ul>
           <li>
-            <a class="next" rel="next" href="?page=2">
+            <a class="next" rel="next" th:if="${lastpage} ne 0" th:href="@{'/lives?page='+${lastpage}}">
+              上一页
+              &nbsp;
+              <!--<i data-feather="arrow-right"></i>-->
+            </a>&nbsp;&nbsp;
+            <a class="next" rel="next" th:if="${nextpage} ne 0" th:href="@{'/lives?page='+${nextpage}}">
               下一页
               &nbsp;
               <!--<i data-feather="arrow-right"></i>-->

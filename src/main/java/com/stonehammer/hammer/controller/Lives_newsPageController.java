@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -16,12 +17,31 @@ public class Lives_newsPageController {
 
     @Autowired
     private Lives_newsService lives_newsService;
-
+    //
+    private static final int LIVES_PER_PAGE = 3;
     @GetMapping("")
-    public String show_lives_list(Model model, HttpSession httpSession){
+    public String show_lives_list(Model model, HttpSession httpSession
+            ,Integer page){
         model.addAttribute("user",httpSession.getAttribute("user"));
-        List<Lives_news> liveslist = lives_newsService.getAllLives();
-        model.addAttribute("liveslist",liveslist);
+        if (page==null)
+            page=1;
+        if (page==0){
+            return "lives";
+        }
+        List<Lives_news> page_lives = lives_newsService.getLivesByIndex
+                ((page-1)*LIVES_PER_PAGE,LIVES_PER_PAGE);
+        if (page_lives.isEmpty()){
+            page_lives = lives_newsService.getLivesByIndex
+                    ((page-2)*LIVES_PER_PAGE,LIVES_PER_PAGE);
+            model.addAttribute("page_lives", page_lives);
+            model.addAttribute("message", "Sorry~暂无更多新闻");
+            model.addAttribute("lastpage",page-2);
+            model.addAttribute("nextpage",page);
+            return "lives";
+        }
+        model.addAttribute("lastpage",page-1);
+        model.addAttribute("nextpage",page+1);
+        model.addAttribute("page_lives", page_lives);
         return "lives";
     }
 

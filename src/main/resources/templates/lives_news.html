@@ -7,12 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="google-site-verification" content="JrywzhHu_lykmprlOZGqoqoEaFHsI_FgCiRmfJW7_LA"/>
   <meta property="og:site_name" content="石锤 App - 新闻持续跟踪">
-
-    <link rel="canonical" th:href="@{'lives/info/'+${lives_news.getLives_id()}}">
+    <link rel="canonical" th:href="@{'/lives/info/'+${lives_news.getLives_id()}}">
     <meta name="description" th:content="${lives_news.getIntroduction()}">
     <meta property="title" th:content="${lives_news.getLives_title()}">
     <meta property="description" th:content="${lives_news.getIntroduction()}">
-    <meta property="url" th:content="@{'lives/info/'+${lives_news.getLives_id()}}">
+    <meta property="url" th:content="@{'/lives/info/'+${lives_news.getLives_id()}}">
     <link rel="icon" th:href="@{/img/timg.jpg}">
     <link rel="apple-touch-icon" th:href="@{/img/timg.jpg}"/>
     <link rel="stylesheet" th:href="@{/css/normalize.css}">
@@ -87,7 +86,7 @@
           if (hours > 0) {
             interval_time = hours + '小时前';
           }
-        else{
+          else{
             //计算相差分钟数
             var leave2=leave1%(3600*1000)        //计算小时数后剩余的毫秒数
             var minutes=Math.floor(leave2/(60*1000))
@@ -126,8 +125,8 @@
       }
     </script>
 
-  <title th:text="${lives_news.getLives_title()}+' - 石锤~您的资讯专家'"></title>
-  <link rel="stylesheet" th:href="@{/css/app.css}">
+    <title th:text="${lives_news.getLives_title()}+' - 石锤~您的资讯专家'"></title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
   </head>
   <body class=" route-home ">
   <nav id="app-nav">
@@ -174,9 +173,9 @@
             </a>
             <!--<button class="dropbtn">下拉菜单</button>-->
             <div class="dropdown-content">
-              <a th:href="@{/user/info}">个人信息</a>
-              <a th:href="@{/user/interest}">我的关注</a>
-              <a th:href="@{/user/message}">我的消息</a>
+              <a th:href="@{/hammer/userinfo}">个人信息</a>
+              <a th:href="@{/interest/user}">我的关注</a>
+              <a th:href="@{/message/user}">我的消息</a>
               <a th:href="@{/hammer/logout}">注销</a>
             </div>
           </div>
@@ -250,7 +249,8 @@
             <br>
             <div class="live-link" th:each="lives_detail:${lives_news.getDetails()}">
               <div class="left-column">
-                <img src="新闻网图标" width="40" height="40"/>
+                <img th:src="${lives_detail.getSource_website().getWebsite_icon()}"
+                     alt="" width="40" height="40">
               </div>
               <div class="right-column">
                 <aside class="line"></aside>
@@ -260,7 +260,7 @@
                     </time>
                   &nbsp; &nbsp;
                   <a th:href="${lives_detail.getUrl()}" target="_blank" rel="nofollow"
-                     th:text="${lives_detail.getName()}">新闻网名称</a>
+                     th:text="${lives_detail.getSource_website().getWebsite_name()}">新闻网名称</a>
                   &nbsp;
                   <span th:text="${lives_detail.getWords_count()}+'字'"></span>
                   &nbsp;

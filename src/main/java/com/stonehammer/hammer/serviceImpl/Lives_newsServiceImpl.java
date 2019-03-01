@@ -24,6 +24,16 @@ public class Lives_newsServiceImpl implements Lives_newsService {
     }
 
     @Override
+    public List<Lives_news> getLivesByIndex(int start_index, int length) {
+        return lives_newsRepository.findAllOrderByTimeDesc(start_index,length);
+    }
+
+    @Override
+    public List<Lives_news> getLivesByWords(String words) {
+        return lives_newsRepository.findLives_newsByWords(words);
+    }
+
+    @Override
     public Lives_news updateLives(Lives_news lives){ return lives_newsRepository.save(lives); }
 
     @Override

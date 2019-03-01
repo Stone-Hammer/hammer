@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="google-site-verification" content="JrywzhHu_lykmprlOZGqoqoEaFHsI_FgCiRmfJW7_LA"/>
+  <meta property="og:site_name" content="石锤 App - 新闻持续跟踪">
+  <link rel="icon" th:href="@{/img/timg.jpg}">
+  <link rel="apple-touch-icon" th:href="@{/img/timg.jpg}"/>
+  <link rel="stylesheet" th:href="@{/css/normalize.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/animate.css}">
+  <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+
+    <link rel="stylesheet" th:href="@{/css/dropdown.css}">
+
+  <!--<script th:src="@{/js/modernizr-2.6.2.min.js}"></script>-->
+  <script th:src="@{/js/feather.min.js}" ></script>
+      <script>
+          window.onload = function(){
+            var user = "[[${user}]]";
+            if (user==null||user==""){
+              alert("登录失效，请重新登录");
+              window.location.href = "[[@{/hammer}]]"
+            }
+            var message = "[[${message}]]"
+            if (message!=null &&message!=""){
+              alert(message)
+            }
+          }
+          // function store() {
+          //   var th=user_info;
+          //   if(confirm("确认保存修改？")){
+          //     th.submit();
+          //     th.action="[[@{/hammer}]]";
+          //   }
+          // }
+
+      </script>
+
+
+  <title>个人信息 Info - 石锤~您的资讯专家 </title>
+  <meta name="description" content="持续追踪热点新闻事件"/>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  </head>
+  <body class=" route-home ">
+    <nav id="app-nav">
+    <div class="container d-flex align-items-center">
+      <a th:href="@{/hammer}" class="branding">
+        石锤
+        <small class="hidden-xs">beta</small>
+      </a>
+      <ul>
+      <li >
+        <a th:href="@{/hammer}">
+          <i data-feather="home"></i>
+          <span> 首页 </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/lives}">
+          <i data-feather="hash"></i>
+          <span class="hidden-xs"> Live </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/story}">
+          <i data-feather="file-text"></i>
+          <span class="hidden-xs"> 专栏 </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/search}">
+          <i data-feather="search"></i>
+          <span class="hidden-xs"> 搜索 </span>
+        </a>
+      </li>
+      <li class="btn-cta" th:switch="${user}" >
+        <div class="dropdown">
+          <a class="dropbtn" th:href="@{/hammer}" th:case="*">
+            <span class="hidden-xs" th:text="${user.getName()}+',您好！'"> 个人中心 </span>
+          </a>
+          <!--<button class="dropbtn">下拉菜单</button>-->
+          <div class="dropdown-content">
+            <a th:href="@{/hammer/userinfo}">个人信息</a>
+            <a th:href="@{/interest/user}">我的关注</a>
+            <a th:href="@{/message/user}">我的消息</a>
+            <a th:href="@{/hammer/logout}">注销</a>
+          </div>
+        </div>
+      </li>
+
+      </ul>
+
+    </div>
+    </nav>
+
+
+    </div>
+    <div id="fh5co-contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 col-md-push-1 animate-box">
+            <div id="login" class="fh5co-contact-info">
+              <h3>修改密码：</h3>
+              <form name="update_password">
+                <div class="row form-group">
+                  <div class="col-md-8">
+                    <input type="password" name="oldpassword" class="form-control" placeholder="输入旧密码*">
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-8">
+                    <input type="password" name="newpassword1" class="form-control" placeholder="输入新密码*">
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-md-8">
+                    <input type="password" name="newpassword2" class="form-control" placeholder="重新输入新密码*">
+                  </div>
+                </div>
+
+                <div class="row animate-box">
+                  <!--<div class="search-box">-->
+                    <button onclick="" class="btn blue btn-primary">修改密码</button>
+                  <!--</div>-->
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="register" class="col-md-6 col-md-offset-3 animate-box">
+            <h3>个人信息：</h3>
+            <!--<form name="user_info">-->
+              <div class="row form-group">
+                <div class="col-md-6">
+                  <span>昵  称：</span>
+                  <input type="text" name="name" class="form-control" placeholder="昵称*"
+                         th:value="${user.getName()}" readonly="true">
+                  <!--<input type="text" name="name" class="form-control"-->
+                         <!--placeholder="你的昵称*" th:value="${user.getName()}">-->
+                </div>
+                <div class="col-md-6">
+                  <span>性  别：</span>
+                  <select name="sex" class="form-control">
+                    <option selected th:value="${user.getSex()}"
+                            th:text="${user.getSex()}"></option>
+                    <!--<option value="男">男</option>-->
+                    <!--<option value="女">女</option>-->
+                  </select>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <span>账  号：</span>
+                  <!--<span th:text="${user.getEmail()}"></span>-->
+                  <input type="text" name="user_id" class="form-control" placeholder="账号*"
+                         th:value="${user.getUser_id()}" readonly="true">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <span>邮  箱：</span>
+                  <!--<span th:text="${user.getEmail()}"></span>-->
+                  <input type="text" name="email" class="form-control" placeholder="邮箱*"
+                         th:value="${user.getEmail()}" readonly="true">
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-md-12">
+                  <span>手机号：</span>
+                  <input type="tel" name="phone" class="form-control" placeholder="手机号码*"
+                         th:value="${user.getPhone()}" readonly="true">
+                </div>
+              </div>
+
+              <!--<div class="form-group">-->
+                <!--<div class="col-md-6 col-md-offset-9 col-sm-6">-->
+                  <!--<button onclick="store()" class="btn btn-primary">确认修改</button>-->
+                <!--</div>-->
+              <!--</div>-->
+
+            <!--</form>-->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </body>
+</html>

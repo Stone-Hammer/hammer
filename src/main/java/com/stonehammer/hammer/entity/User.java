@@ -1,13 +1,16 @@
 package com.stonehammer.hammer.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
 
     @Id
+    @GenericGenerator(name = "generator", strategy = "assigned")
+    @GeneratedValue(generator = "generator")
     private Integer user_id;
     private String name;
     private String password;
@@ -15,7 +18,19 @@ public class User {
     private String email;
     private String phone;
     private String icon;
-//    private List<Interest> list
+
+    @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    @OrderBy("interest_time desc")
+    private List<Interest> interests;
+
+    public List<Interest> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<Interest> interests) {
+        this.interests = interests;
+    }
 
     public Integer getUser_id() {
         return user_id;

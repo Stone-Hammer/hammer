@@ -14,8 +14,11 @@ public class Lives_detail {
     @ManyToOne(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
     @JoinColumn(name = "lives_id")
     private Lives_news lives_news;
-    private String name;
-    private String icon;
+//    private String name;
+//    private String icon;
+    @ManyToOne(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name = "website_id")
+    private Source_website source_website;
     private String url;
     private String title;
     private String detail_text;
@@ -43,21 +46,28 @@ public class Lives_detail {
         this.lives_news = lives_news;
     }
 
-    public String getName() {
-        return name;
+    public Source_website getSource_website() {
+        return source_website;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSource_website(Source_website source_website) {
+        this.source_website = source_website;
     }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getIcon() {
+//        return icon;
+//    }
+//
+//    public void setIcon(String icon) {
+//        this.icon = icon;
+//    }
 
     public String getUrl() {
         return url;

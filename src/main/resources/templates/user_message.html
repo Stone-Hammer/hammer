@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="google-site-verification" content="JrywzhHu_lykmprlOZGqoqoEaFHsI_FgCiRmfJW7_LA"/>
+  <meta property="og:site_name" content="石锤 App - 新闻持续跟踪">
+  <link rel="icon" th:href="@{/img/timg.jpg}">
+  <link rel="apple-touch-icon" th:href="@{/img/timg.jpg}"/>
+  <link rel="stylesheet" th:href="@{/css/normalize.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/animate.css}">
+  <link rel="stylesheet" th:href="@{/css/icomoon.css}">
+
+  <link rel="stylesheet" th:href="@{/css/dropdown.css}">
+
+  <script th:src="@{/js/feather.min.js}" ></script>
+      <script>
+          window.onload = function(){
+            var user = "[[${user}]]";
+            if (user==""){
+              alert("登录失效，请重新登录");
+              window.location.href = "[[@{/hammer}]]"
+            }
+            var message = "[[${message}]]"
+            if (user_message!=null &&user_message!=""){
+              alert(user_message)
+            }
+          }
+      </script>
+
+
+  <title>我的消息 Message - 石锤~您的资讯专家 </title>
+  <meta name="description" content="持续追踪热点新闻事件"/>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  </head>
+  <body class="search">
+    <nav id="app-nav">
+    <div class="container d-flex align-items-center">
+      <a th:href="@{/hammer}" class="branding">
+        石锤
+        <small class="hidden-xs">beta</small>
+      </a>
+      <ul>
+      <li >
+        <a th:href="@{/hammer}">
+          <i data-feather="home"></i>
+          <span> 首页 </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/lives}">
+          <i data-feather="hash"></i>
+          <span class="hidden-xs"> Live </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/story}">
+          <i data-feather="file-text"></i>
+          <span class="hidden-xs"> 专栏 </span>
+        </a>
+      </li>
+
+      <li >
+        <a th:href="@{/search}">
+          <i data-feather="search"></i>
+          <span class="hidden-xs"> 搜索 </span>
+        </a>
+      </li>
+      <li class="btn-cta" th:switch="${user}" >
+        <div class="dropdown">
+          <a class="dropbtn" th:href="@{/hammer}" th:case="*">
+            <span class="hidden-xs" th:text="${user.getName()}+',您好！'"> 个人中心 </span>
+          </a>
+          <!--<button class="dropbtn">下拉菜单</button>-->
+          <div class="dropdown-content">
+            <a th:href="@{/hammer/userinfo}">个人信息</a>
+            <a th:href="@{/interest/user}">我的关注</a>
+            <a th:href="@{/message/user}">我的消息</a>
+            <a th:href="@{/hammer/logout}">注销</a>
+          </div>
+        </div>
+      </li>
+      </ul>
+
+    </div>
+    </nav>
+
+    <div class="container">
+      <aside class="search-hits-info" th:text="'共有 '+${messages.size()}+' 条消息'"></aside>
+
+      <div class="list-item event-item" th:each="message:${messages}">
+        <h3>
+          <span class="object-label"> <i data-feather="file-text"></i> 系统消息</span>
+          <span th:text="${message.getText()}">
+            消息内容
+          </span>
+        </h3>
+        <p class="summary" th:text="${message.getText()}">
+          消息内容
+        </p>
+
+        <footer>
+          <div class="badge">
+            <time th:text="${message.getFormatTime()}">时间</time>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+  </body>
+</html>

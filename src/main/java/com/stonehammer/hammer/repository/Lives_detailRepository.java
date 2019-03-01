@@ -15,4 +15,7 @@ public interface Lives_detailRepository extends JpaRepository<Lives_detail,Integ
     @Transactional
     @Query("delete from Lives_detail d where d.detail_id=?1")
     int deleteByDetail_id(Integer detail_id);
+
+    @Query(value = "select * from lives_detail where locate(?1,title)>0 order by time desc",nativeQuery = true)
+    List<Lives_detail> findLives_detailByWords(String words);
 }

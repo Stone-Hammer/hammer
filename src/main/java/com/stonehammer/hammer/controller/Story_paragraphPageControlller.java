@@ -33,8 +33,9 @@ public class Story_paragraphPageControlller {
     @PostMapping("/add")
     public String add_paragraph_submit(Model model, @ModelAttribute Story_paragraph paragraph){
         Story_paragraph newParagraph=new Story_paragraph();
-        newParagraph.setIcon(paragraph.getIcon());
-        newParagraph.setName(paragraph.getName());
+//        newParagraph.setName(paragraph.getName());
+//        newParagraph.setIcon(paragraph.getIcon());
+        newParagraph.setSource_website(paragraph.getSource_website());
         newParagraph.setParagraph_id(paragraph.getParagraph_id());
         newParagraph.setParagraph_text(paragraph.getParagraph_text());
         newParagraph.setStory_news(paragraph.getStory_news());
