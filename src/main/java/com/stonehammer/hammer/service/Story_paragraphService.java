@@ -13,6 +13,8 @@ public interface Story_paragraphService {
     //返回所有故事化段落
     List<Story_paragraph> getAllParagraph();
 
+    //根据外键返回相应段落
+    List<Story_paragraph> findParagraphByStory_id(Integer story_id);
     //返回指定故事化新闻的所有段落
     List<Story_paragraph> getAllParagraphByStoryId(Integer story_id);
 

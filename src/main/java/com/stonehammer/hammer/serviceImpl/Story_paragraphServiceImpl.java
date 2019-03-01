@@ -24,6 +24,9 @@ public class Story_paragraphServiceImpl implements Story_paragraphService {
     }
 
     @Override
+    public List<Story_paragraph> findParagraphByStory_id(Integer story_id){return story_paragraphRepository.findParagraphByStory_id(story_id);}
+
+    @Override
     public List<Story_paragraph> getAllParagraphByStoryId(Integer story_id) {
         return story_paragraphRepository.findParagraphByStoryId(story_id);
     }
@@ -35,7 +38,8 @@ public class Story_paragraphServiceImpl implements Story_paragraphService {
 
     @Override
     public void deleteParagraph(Integer paragraph_id) {
-        story_paragraphRepository.deleteById(paragraph_id);
+//        story_paragraphRepository.deleteById(paragraph_id);
+        story_paragraphRepository.deleteByParagraph_id(paragraph_id);
     }
 
     @Override

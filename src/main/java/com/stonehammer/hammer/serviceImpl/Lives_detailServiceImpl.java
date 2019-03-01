@@ -25,6 +25,9 @@ public class Lives_detailServiceImpl implements Lives_detailService {
     }
 
     @Override
+    public List<Lives_detail> findAllByLives_id(Integer lives_id){ return lives_detailRepository.findAllByLives_id(lives_id);}
+
+    @Override
     public List<Lives_detail> getLives_detailByWords(String words) {
         return lives_detailRepository.findLives_detailByWords(words);
     }
@@ -36,7 +39,8 @@ public class Lives_detailServiceImpl implements Lives_detailService {
 
     @Override
     public void deleteLives_detail(Integer detail_id){
-        lives_detailRepository.deleteById(detail_id);
+//        lives_detailRepository.deleteById(detail_id);
+        lives_detailRepository.deleteByDetail_id(detail_id);
     }
 
     @Override
