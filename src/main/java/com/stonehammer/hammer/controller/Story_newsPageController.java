@@ -42,12 +42,14 @@ public class Story_newsPageController {
         List<Story_news> page_story = story_newsService.getStoryByIndex
                 ((page-1)*STORY_PER_PAGE,STORY_PER_PAGE);
         if (page_story.isEmpty()){
-            page_story = story_newsService.getStoryByIndex
-                    ((page-2)*STORY_PER_PAGE,STORY_PER_PAGE);
+            if (page > 1){
+                page_story = story_newsService.getStoryByIndex
+                        ((page-2)*STORY_PER_PAGE,STORY_PER_PAGE);
+            }
             model.addAttribute("page_story", page_story);
             model.addAttribute("message", "Sorry~暂无更多新闻");
-            model.addAttribute("lastpage",page-2);
-            model.addAttribute("nextpage",page);
+            model.addAttribute("lastpage", page-2>0?page-2:1);
+            model.addAttribute("nextpage", page);
             return "story";
         }
         model.addAttribute("lastpage",page-1);
@@ -74,11 +76,6 @@ public class Story_newsPageController {
         model.addAttribute("story_news",story_news);
         model.addAttribute("story_paragraphs",story_paragraphs);
         return "story_news";
-    }
-
-    @GetMapping("")
-    public String index(Model model){
-        return "index-1";
     }
 
     @GetMapping("/all")

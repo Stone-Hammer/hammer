@@ -31,11 +31,13 @@ public class Lives_newsPageController {
         List<Lives_news> page_lives = lives_newsService.getLivesByIndex
                 ((page-1)*LIVES_PER_PAGE,LIVES_PER_PAGE);
         if (page_lives.isEmpty()){
-            page_lives = lives_newsService.getLivesByIndex
-                    ((page-2)*LIVES_PER_PAGE,LIVES_PER_PAGE);
+            if (page > 1){
+                page_lives = lives_newsService.getLivesByIndex
+                        ((page-2)*LIVES_PER_PAGE,LIVES_PER_PAGE);
+            }
             model.addAttribute("page_lives", page_lives);
             model.addAttribute("message", "Sorry~暂无更多新闻");
-            model.addAttribute("lastpage",page-2);
+            model.addAttribute("lastpage",page-2>0?page-2:1);
             model.addAttribute("nextpage",page);
             return "lives";
         }
