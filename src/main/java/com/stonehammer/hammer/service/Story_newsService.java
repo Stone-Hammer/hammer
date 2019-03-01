@@ -15,6 +15,9 @@ public interface Story_newsService {
     List<Story_news> getAllStory();
 
     //修改故事化新闻
+    void updateStoryAdmin(String story_title,String introduction,String tags,Integer story_id);
+
+    //修改故事化新闻
     Story_news updateStory(Story_news story);
 
     //删除故事化新闻

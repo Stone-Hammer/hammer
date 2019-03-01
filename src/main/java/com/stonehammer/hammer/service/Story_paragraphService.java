@@ -15,6 +15,9 @@ public interface Story_paragraphService {
     //返回所有故事化段落
     List<Story_paragraph> getAllParagraph();
 
+    //根据外键返回相应段落
+    List<Story_paragraph> findParagraphByStory_id(Integer story_id);
+
     //修改故事化段落
     Story_paragraph updateParagraph(Story_paragraph story_paragraph);
 

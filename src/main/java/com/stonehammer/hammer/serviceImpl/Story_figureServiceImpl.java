@@ -25,13 +25,17 @@ public class Story_figureServiceImpl implements Story_figureService {
     }
 
     @Override
+    public List<Story_figure> findAllByStory_id(Integer story_id){ return story_figureRepository.findAllByStory_id(story_id); }
+
+    @Override
     public Story_figure updateFigure(Story_figure story_figure) {
         return story_figureRepository.save(story_figure);
     }
 
     @Override
     public void deleteFigure(Integer figure_id) {
-        story_figureRepository.deleteById(figure_id);
+//        story_figureRepository.deleteById(figure_id);
+        story_figureRepository.deleteByFigure_id(figure_id);
     }
 
     @Override

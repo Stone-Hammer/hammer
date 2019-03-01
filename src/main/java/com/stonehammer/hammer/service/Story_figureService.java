@@ -12,6 +12,9 @@ public interface Story_figureService {
     //返回所有涉事人物
     List<Story_figure> getAllFigure();
 
+    //根据外键返回相应涉事人物
+    List<Story_figure> findAllByStory_id(Integer story_id);
+
     //修改涉事人物
     Story_figure updateFigure(Story_figure story_figure);
 

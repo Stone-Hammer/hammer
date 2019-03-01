@@ -27,7 +27,10 @@ public class Lives_newsServiceImpl implements Lives_newsService {
     public Lives_news updateLives(Lives_news lives){ return lives_newsRepository.save(lives); }
 
     @Override
-    public void deleteLives(Integer lives_id){ lives_newsRepository.deleteById(lives_id);}
+    public void deleteLives(Integer lives_id){
+//        lives_newsRepository.deleteById(lives_id);
+        lives_newsRepository.deleteByLives_id(lives_id);
+    }
 
     @Override
     public Lives_news getLivesById(Integer lives_id){ return lives_newsRepository.findById(lives_id).get();}

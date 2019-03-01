@@ -20,14 +20,14 @@ public class Lives_detailPageController {
     public String getAllLives_detail(Model model){
         List<Lives_detail> lists=lives_detailService.getAllLives_detail();
         model.addAttribute("details",lists);
-        return "index";
+        return "picture-list";
     }
 
     @GetMapping("/add")
     public String add_detail_show(Model model){
         model.addAttribute("detail",new Lives_detail());
         model.addAttribute("cap","添加新的时事详情");
-        return "update";
+        return "picture-add";
     }
 
     @PostMapping("/add")
@@ -51,7 +51,7 @@ public class Lives_detailPageController {
         Lives_detail tmp=lives_detailService.getDetailById(detail_id);
         model.addAttribute("detail",tmp);
         model.addAttribute("cap","修改时事详情");
-        return "update";
+        return "picture-add";
     }
 
     @PostMapping("/update/{id}")

@@ -9,18 +9,18 @@ import java.util.List;
 public class Story_news {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer story_id;
     private String story_title;
     private String introduction;
-    @ManyToOne(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
+    @ManyToOne(cascade= CascadeType.MERGE,fetch=FetchType.EAGER)
     @JoinColumn(name = "manager_id")
     private Manager manager;
     private String tags;
     private Integer interest_count;
     private Date story_time;
 
-    @OneToMany(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
+    @OneToMany(cascade= CascadeType.MERGE,fetch=FetchType.LAZY)
     @JoinColumn(name = "story_id")
     private List<Story_paragraph> paragraphs;
 

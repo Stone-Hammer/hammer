@@ -25,13 +25,17 @@ public class Lives_detailServiceImpl implements Lives_detailService {
     }
 
     @Override
+    public List<Lives_detail> findAllByLives_id(Integer lives_id){ return lives_detailRepository.findAllByLives_id(lives_id);}
+
+    @Override
     public Lives_detail updateLives_detail(Lives_detail lives_detail){
         return lives_detailRepository.save(lives_detail);
     }
 
     @Override
     public void deleteLives_detail(Integer detail_id){
-        lives_detailRepository.deleteById(detail_id);
+//        lives_detailRepository.deleteById(detail_id);
+        lives_detailRepository.deleteByDetail_id(detail_id);
     }
 
     @Override

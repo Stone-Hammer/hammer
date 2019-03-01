@@ -3,8 +3,11 @@ package com.stonehammer.hammer.serviceImpl;
 import com.stonehammer.hammer.entity.Story_news;
 import com.stonehammer.hammer.repository.Story_newsRepository;
 import com.stonehammer.hammer.service.Story_newsService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -27,6 +30,12 @@ public class Story_newsServiceImpl implements Story_newsService {
     @Override
     public Story_news updateStory(Story_news story) {
         return story_newsRepository.save(story);
+    }
+
+    @Transactional
+    @Override
+    public void updateStoryAdmin(String story_title,String introduction,String tags,Integer story_id) {
+        story_newsRepository.updateStory_newsById(story_title,introduction,tags,story_id);
     }
 
     @Override
