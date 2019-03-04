@@ -97,4 +97,10 @@ public class adminLives_newsPageController {
         return getAllLives(model);
 //        return "delLive";
     }
+
+    @GetMapping("/lives/search")
+    public String dosearch(Model model,String words){
+        model.addAttribute("lives",lives_newsService.getLivesByWords(words));
+        return "picture-list";
+    }
 }

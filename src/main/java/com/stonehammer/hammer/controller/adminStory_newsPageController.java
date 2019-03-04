@@ -129,4 +129,10 @@ public class adminStory_newsPageController {
         return getAllStory(model);
         //return "delStory";
     }
+
+    @GetMapping("/storys/search")
+    public String dosearch(Model model,String words){
+        model.addAttribute("storys",story_newsService.getStoryByWords(words));
+        return "article-list";
+    }
 }

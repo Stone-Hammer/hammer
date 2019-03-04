@@ -30,5 +30,5 @@ public class ManagerServiceImpl implements ManagerService {
     public Manager getManagerById(Integer manager_id){ return managerRepository.findById(manager_id).get(); }
 
     @Override
-    public Manager getManagerByIdAndPwd(Integer manager_id,String password){ return managerRepository.findByIdAndPassword(manager_id,password); }
+    public Manager getManagerByNameAndPwd(String name,String password){ return managerRepository.findByNameAndPassword(name, password); }
 }

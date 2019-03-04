@@ -22,5 +22,5 @@ public interface ManagerService {
     Manager getManagerById(Integer manager_id);
 
     //根据管理员ID和密码查询管理员信息
-    Manager getManagerByIdAndPwd(Integer manager_id,String password);
+    Manager getManagerByNameAndPwd(String name,String password);
 }

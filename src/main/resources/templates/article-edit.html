@@ -31,12 +31,12 @@
 <body>
 <article class="page-container">
     <form name="updateform" class="form form-horizontal" id="form-article-add" method="post" th:action="@{'/admin/storys/update/'+${story_id}}" th:object="${story}">
-        <!--<div class="row cl">-->
-        <!--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>故事ID：</label>-->
-        <!--<div class="formControls col-xs-8 col-sm-9">-->
-        <!--<input type="text" th:value="${story.story_id}" th:field="*{story_id}" class="input-text" value="" placeholder="" id="story_id" name="story_id">-->
-        <!--</div>-->
-        <!--</div>-->
+        <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>故事ID：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+        <input type="text" th:value="${story.story_id}" th:field="*{story_id}" class="input-text" value="" placeholder="" id="story_id" name="story_id" readonly="true">
+        </div>
+        </div>
         <!--<div class="row cl">-->
         <!--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>管理员ID：</label>-->
         <!--<div class="formControls col-xs-8 col-sm-9">-->
