@@ -37,10 +37,10 @@ import com.google.gson.*;
  */
 public class TimeAnalyse {
 	public static void main(String args[]) throws Exception {
-		URL url = TimeNormalizer.class.getResource("/TimeExp.m");
-		System.out.println(url.toURI().toString());
-		TimeNormalizer normalizer = new TimeNormalizer(url.toURI().toString());
-		normalizer.setPreferFuture(true);
+//		URL url = TimeNormalizer.class.getResource("/TimeExp.m");
+//		System.out.println(url.toURI().toString());
+//		TimeNormalizer normalizer = new TimeNormalizer(url.toURI().toString());
+//		normalizer.setPreferFuture(true);
 
 		//获取txt文件中的时间
 //		File file = new File("F:\\test2.txt");
@@ -58,17 +58,17 @@ public class TimeAnalyse {
 //			System.out.println(line[i]);
 //			System.out.println(DateUtil.formatDateDefault(unit[0].getTime()) + "-" + unit[0].getIsAllDayTime());
 
-		File file = new File("F:\\test.json");
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		Gson gson = new GsonBuilder().create();
-		News[] news = gson.fromJson(reader, News[].class);
-		int lines = news.length;
-		for (int i = 0; i <=lines; i++) {
-			normalizer.parse(news[i].content);// 抽取时间
-			TimeUnit[] unit = normalizer.getTimeUnit();
-			System.out.println(news[i].content);
-			System.out.println(DateUtil.formatDateDefault(unit[0].getTime()) + "-" + unit[0].getIsAllDayTime());
-		}
+//		File file = new File("F:\\test.json");
+//		BufferedReader reader = new BufferedReader(new FileReader(file));
+//		Gson gson = new GsonBuilder().create();
+//		News[] news = gson.fromJson(reader, News[].class);
+//		int lines = news.length;
+//		for (int i = 0; i <=lines; i++) {
+//			normalizer.parse(news[i].content);// 抽取时间
+//			TimeUnit[] unit = normalizer.getTimeUnit();
+//			System.out.println(news[i].content);
+//			System.out.println(DateUtil.formatDateDefault(unit[0].getTime()) + "-" + unit[0].getIsAllDayTime());
+//		}
 	}
 
 

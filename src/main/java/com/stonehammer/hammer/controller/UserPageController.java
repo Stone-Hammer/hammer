@@ -29,8 +29,8 @@ public class UserPageController {
     private Story_newsService story_newsService;
 
     //首页展示的时事新闻和故事化新闻的个数
-    private static final int INDEX_LIVES_NUM = 3;
-    private static final int INDEX_STORY_NUM = 3;
+    private static final int INDEX_LIVES_NUM = 6;
+    private static final int INDEX_STORY_NUM = 6;
 
 //    @GetMapping("test")
 //    public String test(String test,Integer age){

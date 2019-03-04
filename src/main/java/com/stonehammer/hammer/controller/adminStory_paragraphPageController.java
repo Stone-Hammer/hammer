@@ -1,17 +1,28 @@
 package com.stonehammer.hammer.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.stonehammer.hammer.entity.Source_website;
+import com.stonehammer.hammer.entity.Story_figure;
 import com.stonehammer.hammer.entity.Story_paragraph;
 import com.stonehammer.hammer.service.Source_websiteService;
+import com.stonehammer.hammer.service.Story_figureService;
 import com.stonehammer.hammer.service.Story_newsService;
 import com.stonehammer.hammer.service.Story_paragraphService;
+import com.stonehammer.hammer.time.nlp.News;
+import com.stonehammer.hammer.time.nlp.TimeNormalizer;
+import com.stonehammer.hammer.time.nlp.TimeUnit;
+import com.stonehammer.hammer.time.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.*;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -19,18 +30,25 @@ import java.util.List;
 public class adminStory_paragraphPageController {
 
     @Autowired
+    public Story_figureService story_figureService;
+    @Autowired
     private Story_paragraphService story_paragraphService;
     @Autowired
     private Story_newsService story_newsService;
     @Autowired
     private Source_websiteService source_websiteService;
 
-    @PostMapping("/paras/upload")
+    @PostMapping("/paras/upload/{id}")
     @ResponseBody
-    public String upload(@RequestParam("file_upload") MultipartFile file) {
+    public String upload(@RequestParam("file_upload") MultipartFile file,
+            @PathVariable("id") Integer story_id, Model model) throws Exception{
         if (file.isEmpty()) {
             return "上传失败，请选择文件";
         }
+        URL url = TimeNormalizer.class.getResource("/TimeExp.m");
+        System.out.println(url.toURI().toString());
+        TimeNormalizer normalizer = new TimeNormalizer(url.toURI().toString());
+        normalizer.setPreferFuture(false);
 //        String fileName = file.getOriginalFilename();
 //        String filePath = "/Users/itinypocket/workspace/temp/";
 //        File dest = new File(filePath + fileName);
@@ -39,7 +57,44 @@ public class adminStory_paragraphPageController {
 //        } catch (IOException e) {
 //            LOGGER.error(e.toString(), e);
 //        }
-        return "上传失败！";
+//        File file = new File("F:\\test.json");
+//        File f = (File)file;
+//        final int bufferSize = 1024;
+//        final char[] buffer = new char[bufferSize];
+//        final StringBuilder out = new StringBuilder();
+        Reader in = new InputStreamReader(file.getInputStream(), "UTF-8");
+//        for (; ; ) {
+//            int rsz = in.read(buffer, 0, buffer.length);
+//            if (rsz < 0)
+//                break;
+//            out.append(buffer, 0, rsz);
+//        }
+        // 加个判断
+//        BufferedReader reader = new BufferedReader(new FileReader(f));
+        Gson gson = new GsonBuilder().create();
+        News[] news = gson.fromJson(in, News[].class);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (int i = 0; i < news.length; i++) {
+            normalizer.parse(news[i].paragraph_text);// 抽取时间
+            TimeUnit[] unit = normalizer.getTimeUnit();
+            Date newTime = unit[0].getTime();
+//            String newTime = DateUtil.formatDateDefault(unit[0].getTime()) + "-" + unit[0].getIsAllDayTime();
+            Story_paragraph story_paragraph = new Story_paragraph();
+            story_paragraph.setStory_news(story_newsService.getStoryById(story_id));
+            story_paragraph.setSource_website(source_websiteService.getSource_websiteByName("中国新闻网"));
+            story_paragraph.setParagraph_text(news[i].paragraph_text);
+            story_paragraph.setTitle(news[i].title);
+            story_paragraph.setUrl(news[i].url);
+            story_paragraph.setTime(newTime);
+
+            story_paragraphService.addParagraph(story_paragraph);
+        }
+        List<Story_figure> lists1=story_figureService.findAllByStory_id(story_id);
+        List<Story_paragraph> lists2=story_paragraphService.findParagraphByStory_id(story_id);
+        model.addAttribute("story_id",story_id);
+        model.addAttribute("figures",lists1);
+        model.addAttribute("paras",lists2);
+        return "article-con";
     }
 
     @GetMapping("/paras/all")

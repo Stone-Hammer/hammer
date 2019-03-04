@@ -29,7 +29,7 @@ public class Story_newsPageController {
     @Autowired
     private InterestService interestService;
 
-    private static final int STORY_PER_PAGE = 3;
+    private static final int STORY_PER_PAGE = 12;
     @GetMapping("")
     public String show_story_list(Model model, HttpSession httpSession
             ,Integer page){

@@ -18,7 +18,7 @@ public class Lives_newsPageController {
     @Autowired
     private Lives_newsService lives_newsService;
     //
-    private static final int LIVES_PER_PAGE = 3;
+    private static final int LIVES_PER_PAGE = 15;
     @GetMapping("")
     public String show_lives_list(Model model, HttpSession httpSession
             ,Integer page){
