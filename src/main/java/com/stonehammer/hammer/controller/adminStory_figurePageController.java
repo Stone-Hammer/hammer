@@ -2,8 +2,10 @@ package com.stonehammer.hammer.controller;
 
 import com.stonehammer.hammer.entity.Story_figure;
 import com.stonehammer.hammer.entity.Story_news;
+import com.stonehammer.hammer.entity.Story_paragraph;
 import com.stonehammer.hammer.service.Story_figureService;
 import com.stonehammer.hammer.service.Story_newsService;
+import com.stonehammer.hammer.service.Story_paragraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,17 @@ public class adminStory_figurePageController {
     private Story_figureService story_figureService;
     @Autowired
     private Story_newsService story_newsService;
+    @Autowired
+    private Story_paragraphService story_paragraphService;
+
+    private String article_con(Model model, Integer story_id){
+        List<Story_figure> lists1=story_figureService.findAllByStory_id(story_id);
+        List<Story_paragraph> lists2=story_paragraphService.findParagraphByStory_id(story_id);
+        model.addAttribute("story_id",story_id);
+        model.addAttribute("figures",lists1);
+        model.addAttribute("paras",lists2);
+        return "article-con";
+    }
 
     @GetMapping("/figure/all")
     public String getAllFigures(Model model){
@@ -55,9 +68,7 @@ public class adminStory_figurePageController {
         newFigure.setStatus(figure.getStatus());
         newFigure.setStory_news(story_newsService.getStoryById(story_id));
         story_figureService.addFigure(newFigure);
-        return getAllFigures(model);
-//        model.addAttribute("figure",newFigure);
-//        return "result";
+        return article_con(model, story_id);
     }
 
     @GetMapping("/figure/update/{id}/{story_id}")
@@ -75,7 +86,7 @@ public class adminStory_figurePageController {
         figure.setFigure_id(figure_id);
         figure.setStory_news(story_newsService.getStoryById(story_id));
         story_figureService.updateFigure(figure);
-        return getAllFigures(model);
+        return article_con(model, story_id);
 //        model.addAttribute("figure",figure);
 //        return "result";
     }
@@ -83,8 +94,10 @@ public class adminStory_figurePageController {
     @GetMapping("/figure/delete/{id}")
     public String deleteFigureById(Model model,@PathVariable("id") Integer figure_id){
 //        story_newsService.getStoryById(story_id);
+        Story_figure story_figure = story_figureService.getFigureById(figure_id);
+        Integer story_id = story_figure.getStory_news().getStory_id();
         story_figureService.deleteFigure(figure_id);
-        return getAllFigures(model);
+        return article_con(model, story_id);
 //        return "delFigure";
     }
 }

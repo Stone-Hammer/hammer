@@ -27,7 +27,7 @@ public class Lives_news {
 
     public String getFormatTime() {
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(lives_time);
+        return lives_time!=null?sdf.format(lives_time):"";
     }
 
     public List<Lives_detail> getDetails() {

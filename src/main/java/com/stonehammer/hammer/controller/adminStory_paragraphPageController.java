@@ -12,7 +12,6 @@ import com.stonehammer.hammer.service.Story_paragraphService;
 import com.stonehammer.hammer.time.nlp.News;
 import com.stonehammer.hammer.time.nlp.TimeNormalizer;
 import com.stonehammer.hammer.time.nlp.TimeUnit;
-import com.stonehammer.hammer.time.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +37,16 @@ public class adminStory_paragraphPageController {
     @Autowired
     private Source_websiteService source_websiteService;
 
+    private String article_con(Model model, Integer story_id){
+        List<Story_figure> lists1=story_figureService.findAllByStory_id(story_id);
+        List<Story_paragraph> lists2=story_paragraphService.findParagraphByStory_id(story_id);
+        model.addAttribute("story_id",story_id);
+        model.addAttribute("figures",lists1);
+        model.addAttribute("paras",lists2);
+        return "article-con";
+    }
+
     @PostMapping("/paras/upload/{id}")
-    @ResponseBody
     public String upload(@RequestParam("file_upload") MultipartFile file,
             @PathVariable("id") Integer story_id, Model model) throws Exception{
         if (file.isEmpty()) {
@@ -73,28 +80,31 @@ public class adminStory_paragraphPageController {
 //        BufferedReader reader = new BufferedReader(new FileReader(f));
         Gson gson = new GsonBuilder().create();
         News[] news = gson.fromJson(in, News[].class);
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (int i = 0; i < news.length; i++) {
-            normalizer.parse(news[i].paragraph_text);// 抽取时间
-            TimeUnit[] unit = normalizer.getTimeUnit();
-            Date newTime = unit[0].getTime();
+            try{
+                normalizer.parse(news[i].paragraph_text);// 抽取时间
+                TimeUnit[] unit = normalizer.getTimeUnit();
+                Date newTime = unit[0].getTime();
 //            String newTime = DateUtil.formatDateDefault(unit[0].getTime()) + "-" + unit[0].getIsAllDayTime();
-            Story_paragraph story_paragraph = new Story_paragraph();
-            story_paragraph.setStory_news(story_newsService.getStoryById(story_id));
-            story_paragraph.setSource_website(source_websiteService.getSource_websiteByName("中国新闻网"));
-            story_paragraph.setParagraph_text(news[i].paragraph_text);
-            story_paragraph.setTitle(news[i].title);
-            story_paragraph.setUrl(news[i].url);
-            story_paragraph.setTime(newTime);
+                Story_paragraph story_paragraph = new Story_paragraph();
+                story_paragraph.setStory_news(story_newsService.getStoryById(story_id));
+                story_paragraph.setSource_website(source_websiteService.getSource_websiteByName("中国新闻网"));
+                story_paragraph.setParagraph_text(news[i].paragraph_text);
+                story_paragraph.setTitle(news[i].title);
+                story_paragraph.setUrl(news[i].url);
+                if (newTime.after(sdf.parse(news[i].time)))
+                    newTime = sdf.parse(news[i].time);
+                story_paragraph.setTime(newTime);
 
-            story_paragraphService.addParagraph(story_paragraph);
+                story_paragraphService.addParagraph(story_paragraph);
+            }catch (Exception e){
+                e.printStackTrace();
+                continue;
+            }
+
         }
-        List<Story_figure> lists1=story_figureService.findAllByStory_id(story_id);
-        List<Story_paragraph> lists2=story_paragraphService.findParagraphByStory_id(story_id);
-        model.addAttribute("story_id",story_id);
-        model.addAttribute("figures",lists1);
-        model.addAttribute("paras",lists2);
-        return "article-con";
+        return article_con(model, story_id);
     }
 
     @GetMapping("/paras/all")
@@ -126,9 +136,7 @@ public class adminStory_paragraphPageController {
         newParagraph.setTitle(paragraph.getTitle());
         newParagraph.setUrl(paragraph.getUrl());
         story_paragraphService.addParagraph(newParagraph);
-        return getAllParagraph(model);
-//        model.addAttribute("para",newParagraph);
-//        return "result";
+        return article_con(model, story_id);
     }
 
     @GetMapping("/paras/update/{id}/{story_id}")
@@ -147,14 +155,15 @@ public class adminStory_paragraphPageController {
         paragraph.setStory_news(story_newsService.getStoryById(story_id));
         paragraph.setSource_website(source_websiteService.getSource_websiteByName(paragraph.getSource_website().getWebsite_name()));
         story_paragraphService.updateParagraph(paragraph);
-        return getAllParagraph(model);
+        return article_con(model, story_id);
 //        model.addAttribute("para",paragraph);
 //        return "result";
     }
 
     @GetMapping("/paras/delete/{id}")
     public String deleteParagraphById(Model model,@PathVariable("id") Integer paragraph_id){
+        Integer story_id = story_paragraphService.getParagraphById(paragraph_id).getStory_news().getStory_id();
         story_paragraphService.deleteParagraph(paragraph_id);
-        return getAllParagraph(model);
+        return article_con(model, story_id);
     }
 }

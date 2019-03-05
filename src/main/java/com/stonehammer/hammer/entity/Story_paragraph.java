@@ -24,7 +24,7 @@ public class Story_paragraph {
     private Date time;
     public String getFormatTime() {
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(time);
+        return time!=null?sdf.format(time):"";
     }
     public Integer getParagraph_id() {
         return paragraph_id;

@@ -2,9 +2,11 @@ package com.stonehammer.hammer.controller;
 
 import com.stonehammer.hammer.entity.Interest;
 import com.stonehammer.hammer.entity.Story_news;
+import com.stonehammer.hammer.entity.Story_paragraph;
 import com.stonehammer.hammer.entity.User;
 import com.stonehammer.hammer.service.InterestService;
 import com.stonehammer.hammer.service.Story_newsService;
+import com.stonehammer.hammer.service.Story_paragraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,8 @@ public class InterestPageController {
     private InterestService interestService;
     @Autowired
     private Story_newsService story_newsService;
+    @Autowired
+    private Story_paragraphService story_paragraphService;
 
     private boolean validate(User user){
         if (user==null||user.getUser_id()==null||
@@ -76,15 +80,22 @@ public class InterestPageController {
             message = "您已关注该新闻！";
             isInterest = true;
         }
-        //添加一条关注的数据
-        interest.setStory_news(story_news);
-        interestService.addInterest(interest);
+        else{
+            //添加一条关注的数据
+            story_news.setInterest_count(story_news.getInterest_count()+1);
+            interest.setStory_news(story_news);
+            interestService.addInterest(interest);
+            message = "关注成功！";
+            isInterest = true;
+        }
+//        story_news = story_newsService.getStoryById(story_id);
 
-        isInterest = true;
-        message = "关注成功！";
         model.addAttribute("isInterest",isInterest);
         model.addAttribute("message", message);
         model.addAttribute("story_news", story_news);
+
+        List<Story_paragraph> story_paragraphs=story_paragraphService.getAllParagraphByStoryId(story_id);
+        model.addAttribute("story_paragraphs",story_paragraphs);
         return "story_news";
     }
 
@@ -100,8 +111,13 @@ public class InterestPageController {
         Interest interest= interestService.getInterestById(user.getUser_id(),story_id);
 //        System.out.println(interest+" "+interest.getInterest_id());
         interestService.deleteInterest(interest.getInterest_id());
-        model.addAttribute("story_news", story_newsService.getStoryById(story_id));
+        Story_news story_news = story_newsService.getStoryById(story_id);
+        story_news.setInterest_count(story_news.getInterest_count()-1);
+        story_newsService.updateStory(story_news);
+        model.addAttribute("story_news", story_news);
         model.addAttribute("isInterest",false);
+        List<Story_paragraph> story_paragraphs=story_paragraphService.getAllParagraphByStoryId(story_id);
+        model.addAttribute("story_paragraphs",story_paragraphs);
         return "story_news";
     }
 

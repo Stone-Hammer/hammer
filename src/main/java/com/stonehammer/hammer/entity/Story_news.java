@@ -31,7 +31,7 @@ public class Story_news {
 
     public String getFormatTime() {
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(story_time);
+        return story_time!=null?sdf.format(story_time):"";
     }
 
     public List<Story_figure> getFigures() {

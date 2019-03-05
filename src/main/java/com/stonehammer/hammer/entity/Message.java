@@ -17,7 +17,7 @@ public class Message {
 
     public String getFormatTime() {
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(time);
+        return time!=null?sdf.format(time):"";
     }
 
     public Integer getMessage_id() {
